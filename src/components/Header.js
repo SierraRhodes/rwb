@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Dropdown } from 'react-bootstrap';
+import { Link } from "react-router-dom";
 
 const Navbar = styled.nav`
   display: flex;
@@ -90,7 +91,7 @@ const Header = () => {
         <NavItem onClick={toggleWriteDropdown}>Write</NavItem>
         <NavItem>Live Streams</NavItem>
         <NavItem>Connect</NavItem>
-        <NavItem>Log In</NavItem>
+        <NavItem><Link to="/login">Log in</Link></NavItem>
         <NavItem>Log Out</NavItem>
       </NavItems>
       <Dropdown show={showWriteDropdown}>
