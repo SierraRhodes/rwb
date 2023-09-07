@@ -91,13 +91,14 @@ const Header = () => {
         <NavItem onClick={toggleWriteDropdown}>Write</NavItem>
         <NavItem>Live Streams</NavItem>
         <NavItem>Connect</NavItem>
-        <NavItem><Link to="/login">Log in</Link></NavItem>
-        <NavItem>Log Out</NavItem>
+        <NavItem><Link to="/register">Register</Link></NavItem>
+        <NavItem><Link to="/login">Log In</Link></NavItem>
+        <NavItem><Link to="/logout">Log Out</Link></NavItem>
       </NavItems>
       <Dropdown show={showWriteDropdown}>
         <Dropdown.Menu>
           <Dropdown.Item onClick={() => handleWriteOptionClick('create')}>
-            Create New Story
+          <Link to="/story-form">Create New Story</Link>
           </Dropdown.Item>
           <Dropdown.Item onClick={() => handleWriteOptionClick('edit')}>
             Edit Existing Story
