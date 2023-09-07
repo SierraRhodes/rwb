@@ -1,23 +1,20 @@
-//Represents a single story in the list. It displays basic information like title and content and may include options for editing or deleting the story (if the user is the owner).
+// StoryItem.js
 import React from 'react';
 
-function StoryItem({ story, isOwner, onEdit, onDelete }) {
-  const { title, content } = story;
-
+function StoryItem({ story }) {
   return (
-    <React.Fragment>
-      <div className="story-item">
-        <h3>{title}</h3>
-        <p>{content}</p>
-
-        {isOwner && (
-          <div className="options">
-            <button onClick={() => onEdit(story)}>Edit</button>
-            <button onClick={() => onDelete(story)}>Delete</button>
-          </div>
-        )}
-      </div>
-    </React.Fragment>
+    <li key={story.id}>
+      <h3>{story.title}</h3>
+      <p>{story.content}</p>
+      <h4>Chapters:</h4>
+      <ul>
+        {story.chapters.map((chapter) => (
+          <li key={chapter.id}>
+            <h5>{chapter.title}</h5>
+          </li>
+        ))}
+      </ul>
+    </li>
   );
 }
 

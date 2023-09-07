@@ -1,48 +1,31 @@
 //Displays a list of stories available to read. This can include both private and public stories.
-function App() {
-  const stories = [
-    {
-      id: 1,
-      title: 'Sample Story 1',
-      content: 'This is the content of the first sample story.',
-      userId: 123, // Owner's user ID
-      chapters: [
-        {
-          id: 101,
-          title: 'Chapter 1',
-          content: 'This is the content of Chapter 1.',
-        },
-        {
-          id: 102,
-          title: 'Chapter 2',
-          content: 'This is the content of Chapter 2.',
-        },
-        // ... more chapters ...
-      ],
-    },
-    {
-      id: 2,
-      title: 'Sample Story 2',
-      content: 'This is the content of the second sample story.',
-      userId: 456, // Owner's user ID
-      chapters: [
-        {
-          id: 201,
-          title: 'Chapter A',
-          content: 'This is the content of Chapter A.',
-        },
-        {
-          id: 202,
-          title: 'Chapter B',
-          content: 'This is the content of Chapter B.',
-        },
-        // ... more chapters ...
-      ],
-    },
-    // ... more stories ...
-  ];
+import React from 'react';
 
-  const user = {
-    id: 123, // The user's ID
-  };
+function StoryList({ stories, user }) {
+  const userStories = Array.isArray(stories) ? stories.filter((story) => story.userId === user.id) : [];
+
+
+  return (
+    <div>
+      <h2>Your Stories</h2>
+      <ul>
+        {userStories.map((story) => (
+          <li key={story.id}>
+            <h3>{story.title}</h3>
+            <p>{story.content}</p>
+            <h4>Chapters:</h4>
+            <ul>
+              {story.chapters.map((chapter) => (
+                <li key={chapter.id}>
+                  <h5>{chapter.title}</h5>
+                </li>
+              ))}
+            </ul>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 }
+
+export default StoryList;

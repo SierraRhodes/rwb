@@ -5,6 +5,7 @@ import Header from './Header';
 import Login from "./Login";
 import Logout from "./Logout";
 import Register from "./Register";
+import StoryList from "./StoryList";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -13,7 +14,8 @@ function App() {
        <Router>
       <Header />
       <Routes>
-        <Route path= "/register" element={<Register/>} />
+        <Route path= "/story-list" element={<StoryList />} />
+        <Route path= "/register" element={<Register />} />
         <Route path= "/story-form" element={<StoryForm />} />
         <Route path= "/logout" element={<Logout />} />
         <Route path="/login" element={<Login />} />

@@ -1,28 +1,33 @@
 //A form for creating or updating stories. It may contain fields like title, content, and privacy settings.
 import React, { useState } from 'react';
-import axios from 'axios';
+import { db } from '../firebase'; // Import your Firestore instance
+import { collection, addDoc } from 'firebase/firestore'; 
+import { useNavigate } from 'react-router-dom';
 
-function StoryForm(){
-  <h1>Create a Story</h1>
+function StoryForm() {
+
   const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+  const [summary, setSummary] = useState('');
   const [tags, setTags] = useState('');
-  //Add genre
-  //Change content to summary
+  const [genre, setGenre] = useState('');
+  const [successMessage, setSuccessMessage] = useState(null);
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     const newStory = {
       title,
-      content,
+      summary,
+      genre,
       tags: tags.split(',').map(tag => tag.trim()),
     };
 
     try {
-      const response = await axios.post('/api/stories', newStory); // Adjust the API endpoint URL
-      console.log('Story created successfully:', response.data);
-      // Display success message to user
+      const docRef = await addDoc(collection(db, 'stories'), newStory);
+      console.log('Document written with ID: ', docRef.id);
+      setSuccessMessage(`Story created succesfully!`)
+      navigate('/story-list');
     } catch (error) {
       console.error('Error creating story:', error);
       // Display error message to the user 
@@ -30,6 +35,8 @@ function StoryForm(){
   };
 
   return (
+    <div>
+       {successMessage && <div className="success-message">{successMessage}</div>}
     <form onSubmit={handleSubmit}>
       <div>
         <label htmlFor="title">Title:</label>
@@ -42,12 +49,21 @@ function StoryForm(){
         />
       </div>
       <div>
-        <label htmlFor="content">Content:</label>
+        <label htmlFor="summary">Summary:</label>
         <textarea
-          id="content"
-          value={content}
-          onChange={(event) => setContent(event.target.value)}
+          id="summary"
+          value={summary}
+          onChange={(event) => setSummary(event.target.value)}
           required
+        />
+      </div>
+      <div>
+        <label htmlFor="genre">Genre:</label>
+        <input
+          type="text"
+          id="genre"
+          value={genre}
+          onChange={(event) => setGenre(event.target.value)}
         />
       </div>
       <div>
@@ -61,6 +77,8 @@ function StoryForm(){
       </div>
       <button type="submit">Create Story</button>
     </form>
+    </div>
+
   );
 }
 
