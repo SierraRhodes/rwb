@@ -1,3 +1,45 @@
+# _Name of Project: Reading While Black/Brown (RWB - ruby)_
+
+## Project's Purpose or Goal:
+ Empower users to discover a diverse range of books, with a focus on literature containing black and brown people, while also enabling CRUD (Create, Read, Update, Delete) functionality for users to post their own original works. 
+
+## List the absolute minimum features the project requires to meet this purpose or goal:
+Full CRUD functionality when creating their own book 
+Register Account 
+Login/Logout 
+Search Functionality 
+
+## What tools, frameworks, libraries, APIs, modules and/or other resources (whatever is specific to your track, and your language) will you use to create this MVP? List them all here. Be specific.
+React 
+Node.js
+Three.js
+Blender
+Firebase
+Custom API
+
+## If you finish developing the minimum viable product (MVP) with time to spare, what will you work on next? Describe these features here: Be specific.
+
+Forums 
+Rate/Review books 
+Leave comments
+Message other users 
+Livestreams
+
+# Log 
+
+```
+07:40: Begin creating possible files for project
+07:55: Analyze how I want the data to flow from the components
+08:13: Watch a video on how to use Blender
+08:52: Watch video on how to make crystals in Blender
+09:23: Try to make something using Blender 
+10:00: Watch videos on how to use Three.Js
+11:25: Watch videos how how to import 3D models from Blender and use it with Three.Js 
+11:52 Look up wireframes and try to create one
+
+```
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
