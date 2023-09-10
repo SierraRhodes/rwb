@@ -1,10 +1,11 @@
 //A form for creating or updating stories. It may contain fields like title, content, and privacy settings.
 import React, { useState } from 'react';
-import { db } from '../firebase'; // Import your Firestore instance
+import { db, auth } from '../firebase'; // Import your Firestore instance
 import { collection, addDoc } from 'firebase/firestore'; 
 import { useNavigate } from 'react-router-dom';
 
 function StoryForm() {
+
 
   const [title, setTitle] = useState('');
   const [summary, setSummary] = useState('');
@@ -15,19 +16,21 @@ function StoryForm() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    
+    const user = auth.currentUser;
     const newStory = {
       title,
       summary,
       genre,
       tags: tags.split(',').map(tag => tag.trim()),
+      userId: user.uid,
     };
 
     try {
       const docRef = await addDoc(collection(db, 'stories'), newStory);
       console.log('Document written with ID: ', docRef.id);
       setSuccessMessage(`Story created succesfully!`)
-      navigate('/story-list');
+      navigate('/update-story-list');
     } catch (error) {
       console.error('Error creating story:', error);
       // Display error message to the user 

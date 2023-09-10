@@ -4,7 +4,6 @@ import React from 'react';
 function StoryList({ stories, user }) {
   const userStories = Array.isArray(stories) ? stories.filter((story) => story.userId === user.id) : [];
 
-
   return (
     <div>
       <h2>Your Stories</h2>

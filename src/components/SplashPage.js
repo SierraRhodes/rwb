@@ -1,1 +1,10 @@
-<h1>Coming Soon!</h1>
+import react from 'react';
+
+function SplashPage() {
+  return(
+    <h1>Coming Soon!</h1>
+
+  )
+}
+
+export default SplashPage;
