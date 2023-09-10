@@ -39,10 +39,10 @@ Livestreams
 
 Sept 7
 10:00: Work on Login/Logout funcntionality 
-10:15: Use Authentication from Firestore 
-11:30: Create basic splash page
-12:02: Create a database 
-12:14: Troubleshoot adding new story to the user's list of stories 
+11:15: Use Authentication from Firestore 
+12:30: Create basic splash page
+01:02: Create a database 
+01:14: Troubleshoot adding new story to the user's list of stories 
 
 ```
 
