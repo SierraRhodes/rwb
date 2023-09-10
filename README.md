@@ -37,6 +37,13 @@ Livestreams
 11:25: Watch videos how how to import 3D models from Blender and use it with Three.Js 
 11:52 Look up wireframes and try to create one
 
+Sept 7
+10:00: Work on Login/Logout funcntionality 
+10:15: Use Authentication from Firestore 
+11:30: Create basic splash page
+12:02: Create a database 
+12:14: Troubleshoot adding new story to the user's list of stories 
+
 ```
 
 
