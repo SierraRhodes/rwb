@@ -12,7 +12,7 @@ function StoryList({ stories, user }) {
       <ul>
         {stories.map((story) => (
           <li key={story.id}>
-            <h3><Link to="/story-details">{story.title}</Link></h3>
+            <h3><Link to={`/story-detail/${story.id}`}>{story.title}</Link></h3>
             <h4>Chapters:</h4>
             <ul>
               {story.chapters && story.chapters.map((chapter) => (

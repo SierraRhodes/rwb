@@ -1,36 +1,46 @@
 import React, { useState } from 'react';
+import { collection, addDoc, doc } from 'firebase/firestore';
+import { db } from '../firebase'; // Import your Firestore instance
+import { useLocation } from 'react-router-dom';
 
-function Chapter({ chapter, onUpdateChapter }) {
-  // Destructure the title and content from the chapter prop
-  const { id, title, content } = chapter || { id: '', title: '', content: '' };
+function Chapter() {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const storyId = queryParams.get('storyId');
 
-  // State to store the title and content
-  const [chapterTitle, setChapterTitle] = useState(title);
-  const [chapterContent, setChapterContent] = useState(content);
+  const [chapterTitle, setChapterTitle] = useState('');
+  const [chapterContent, setChapterContent] = useState('');
 
-  // Handler for title changes
   const handleTitleChange = (event) => {
     setChapterTitle(event.target.value);
   };
 
-  // Handler for content changes
   const handleContentChange = (event) => {
     setChapterContent(event.target.value);
   };
 
-  // Handler for submitting the form
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Create a new chapter object with the updated title and content
-    const updatedChapter = {
-      id,
-      title: chapterTitle,
-      content: chapterContent,
-    };
+    try {
+      // Create a reference to the "chapters" subcollection within the specified story
+      const storyRef = doc(db, 'stories', storyId);
+      const chaptersRef = collection(storyRef, 'chapters');
 
-    // Call the onUpdateChapter callback to update the chapter
-    onUpdateChapter(updatedChapter);
+      const newChapter = {
+        title: chapterTitle,
+        content: chapterContent,
+      };
+
+      const docRef = await addDoc(chaptersRef, newChapter);
+      console.log('Chapter added with ID:', docRef.id);
+
+      // Clear the input fields after adding the chapter
+      setChapterTitle('');
+      setChapterContent('');
+    } catch (error) {
+      console.error('Error adding chapter:', error);
+    }
   };
 
   return (
@@ -50,10 +60,9 @@ function Chapter({ chapter, onUpdateChapter }) {
         cols={50}
         placeholder="Write your chapter content here..."
       />
-      <button type="submit">Update Chapter</button>
+      <button type="submit">Post Chapter</button>
     </form>
   );
 }
 
 export default Chapter;
-
