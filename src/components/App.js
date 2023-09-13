@@ -5,10 +5,10 @@ import Header from './Header';
 import Login from "./Login";
 import Logout from "./Logout";
 import Register from "./Register";
-import StoryList from "./StoryList";
+// import StoryList from "./StoryList";
 import SplashPage from "./SplashPage";
 import Chapter from "./Chapter";
-import UpdateStoryList from "./UpdateStoryList";
+import StoryContainer from "./StoryContainer";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -17,9 +17,9 @@ function App() {
        <Router>
       <Header />
       <Routes>
-        <Route path= "/update-story-list" element={<UpdateStoryList />} /> 
+        <Route path= "/story-list" element={<StoryContainer />} /> 
         <Route path= "/chapter" element={<Chapter />} />
-        <Route path= "/story-list" element={<StoryList />} />
+        {/* <Route path= "/story-list" element={<StoryList />} /> */}
         <Route path= "/register" element={<Register />} />
         <Route path= "/story-form" element={<StoryForm />} />
         <Route path= "/logout" element={<Logout />} />

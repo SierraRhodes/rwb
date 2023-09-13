@@ -30,7 +30,7 @@ function StoryForm() {
       const docRef = await addDoc(collection(db, 'stories'), newStory);
       console.log('Document written with ID: ', docRef.id);
       setSuccessMessage(`Story created succesfully!`)
-      navigate('/update-story-list');
+      navigate('/story-list');
     } catch (error) {
       console.error('Error creating story:', error);
       // Display error message to the user 
