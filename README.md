@@ -1,15 +1,20 @@
-# _Name of Project: Reading While Black/Brown (RWB - ruby)_
 
-## Project's Purpose or Goal:
+```
+Name of Project: Reading While Black/Brown (RWB - ruby)
+
+Project's Purpose or Goal:
+
  Empower users to discover a diverse range of books, with a focus on literature containing black and brown people, while also enabling CRUD (Create, Read, Update, Delete) functionality for users to post their own original works. 
 
-## List the absolute minimum features the project requires to meet this purpose or goal:
+List the absolute minimum features the project requires to meet this purpose or goal:
+
 X Full CRUD functionality when creating their own book 
 X Register Account 
 X Login/Logout 
 Search Functionality 
 
-## What tools, frameworks, libraries, APIs, modules and/or other resources (whatever is specific to your track, and your language) will you use to create this MVP? List them all here. Be specific.
+What tools, frameworks, libraries, APIs, modules and/or other resources (whatever is specific to your track, and your language) will you use to create this MVP? List them all here. Be specific.
+
 React 
 Node.js
 Three.js
@@ -17,13 +22,14 @@ Blender
 Firebase
 Custom API
 
-## If you finish developing the minimum viable product (MVP) with time to spare, what will you work on next? Describe these features here: Be specific.
+If you finish developing the minimum viable product (MVP) with time to spare, what will you work on next? Describe these features here: Be specific.
 
 Forums 
 Rate/Review books 
 Leave comments
 Message other users 
 Livestreams
+```
 
 # Log 
 
