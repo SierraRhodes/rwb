@@ -4,9 +4,9 @@
  Empower users to discover a diverse range of books, with a focus on literature containing black and brown people, while also enabling CRUD (Create, Read, Update, Delete) functionality for users to post their own original works. 
 
 ## List the absolute minimum features the project requires to meet this purpose or goal:
-Full CRUD functionality when creating their own book 
-Register Account 
-Login/Logout 
+X Full CRUD functionality when creating their own book 
+X Register Account 
+X Login/Logout 
 Search Functionality 
 
 ## What tools, frameworks, libraries, APIs, modules and/or other resources (whatever is specific to your track, and your language) will you use to create this MVP? List them all here. Be specific.
@@ -28,6 +28,7 @@ Livestreams
 # Log 
 
 ```
+Sep 3rd
 07:40: Begin creating possible files for project
 07:55: Analyze how I want the data to flow from the components
 08:13: Watch a video on how to use Blender
@@ -37,12 +38,19 @@ Livestreams
 11:25: Watch videos how how to import 3D models from Blender and use it with Three.Js 
 11:52 Look up wireframes and try to create one
 
-Sept 7
+Sept 7th
 10:00: Work on Login/Logout funcntionality 
 11:15: Use Authentication from Firestore 
 12:30: Create basic splash page
 01:02: Create a database 
-01:14: Troubleshoot adding new story to the user's list of stories 
+01:34: Read documentation on how I should structure my database
+02:14: Troubleshoot adding new story to the user's list of stories 
+
+Sep 14th
+11:00am: Work on CRUD functionality
+1:50pm: Incorporated CRUD functionality into stories and chapters
+1:51pm: Troubleshoot chapters length not displaying correctly in story list component
+1:53pm: Begin thinking on how I want the UI/UX to look like
 
 ```
 
