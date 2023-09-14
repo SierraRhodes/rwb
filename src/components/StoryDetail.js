@@ -3,13 +3,14 @@
 
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, collection, getDocs } from 'firebase/firestore'; // Import getDocs
 import { db } from '../firebase';
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 function StoryDetails() {
   const { id } = useParams();
   const [story, setStory] = useState(null);
+  const [chapters, setChapters] = useState([]); // State to store chapters
 
   useEffect(() => {
     const fetchStory = async () => {
@@ -30,6 +31,18 @@ function StoryDetails() {
             genre: storyData.genre,
             // Add other story properties as needed
           });
+
+          // Fetch chapters for the story
+          const chaptersRef = collection(storyDocRef, 'chapters');
+          const chapterQuerySnapshot = await getDocs(chaptersRef);
+          const chapterData = [];
+          chapterQuerySnapshot.forEach((doc) => {
+            chapterData.push({
+              id: doc.id,
+              ...doc.data(),
+            });
+          });
+          setChapters(chapterData);
         } else {
           // Handle the case where the story with the provided ID doesn't exist
           console.error('Story not found.');
@@ -55,12 +68,14 @@ function StoryDetails() {
       {story.genre && <p>{story.genre}</p>}
 
       <h3>Chapters:</h3>
-      {story.chapters && story.chapters.length > 0 ? (
+      {chapters.length > 0 ? ( // Use chapters state to check if chapters exist
         <ul>
-          {story.chapters.map((chapter) => (
+          {chapters.map((chapter) => (
             <li key={chapter.id}>
-              <h4>{chapter.title}</h4>
-              {chapter.content && <p>{chapter.content}</p>}
+               <h4>
+                 <Link to={`/chapter-detail/${story.id}/${chapter.id}`}>{chapter.title}</Link>
+               </h4>
+              {/* {chapter.content && <p>{chapter.content}</p>} */}
             </li>
           ))}
         </ul>
@@ -68,12 +83,15 @@ function StoryDetails() {
         <p>No chapters available for this story.</p>
       )}
 
-<h3><Link to="/story-list">Back to Story List</Link></h3>
-<h3><Link to={`/chapter?storyId=${story.id}`}>Add Chapter</Link></h3>
+      <h3>
+        <Link to="/story-list">Back to Story List</Link>
+      </h3>
+      <h3>
+        <Link to={`/chapter?storyId=${story.id}`}>Add Chapter</Link>
+      </h3>
     </div>
   );
 }
 
-
-
 export default StoryDetails;
+

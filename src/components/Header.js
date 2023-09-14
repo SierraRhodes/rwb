@@ -101,7 +101,7 @@ const Header = () => {
           <Link to="/story-form">Create New Story</Link>
           </Dropdown.Item>
           <Dropdown.Item onClick={() => handleWriteOptionClick('edit')}>
-            Edit Existing Story
+          <Link to="/story-list">Edit Existing Story</Link>
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>

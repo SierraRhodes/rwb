@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { collection, addDoc, doc } from 'firebase/firestore';
 import { db } from '../firebase'; // Import your Firestore instance
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom'; // Import useNavigate
 
 function Chapter() {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const storyId = queryParams.get('storyId');
+  const navigate = useNavigate(); // Add useNavigate hook
 
   const [chapterTitle, setChapterTitle] = useState('');
   const [chapterContent, setChapterContent] = useState('');
@@ -34,6 +35,9 @@ function Chapter() {
 
       const docRef = await addDoc(chaptersRef, newChapter);
       console.log('Chapter added with ID:', docRef.id);
+
+      // Use navigate to go back to the story details page
+      navigate(`/story-detail/${storyId}`); // Adjust the URL as needed
 
       // Clear the input fields after adding the chapter
       setChapterTitle('');
@@ -66,3 +70,4 @@ function Chapter() {
 }
 
 export default Chapter;
+
