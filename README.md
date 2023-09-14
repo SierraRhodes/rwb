@@ -1,7 +1,7 @@
 
-```
-Name of Project: Reading While Black/Brown (RWB - ruby)
+## Reading While Black/Brown (RWB - ruby)
 
+```
 Project's Purpose or Goal:
 
  Empower users to discover a diverse range of books, with a focus on literature containing black and brown people, while also enabling CRUD (Create, Read, Update, Delete) functionality for users to post their own original works. 
