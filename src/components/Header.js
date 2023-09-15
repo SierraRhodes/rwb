@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 const Navbar = styled.nav`
   display: flex;
@@ -13,20 +14,41 @@ const Navbar = styled.nav`
 `;
 
 const Logo = styled.div`
-  color: #ffffff;
   font-size: 24px;
   font-weight: bold;
-  background: linear-gradient(45deg, rgba(255, 255, 255, 0.1), transparent);
+  display: flex;
+  background: linear-gradient(45deg, #ffcc00, #ff99cc, #cc99ff, #99ccff, #66ffcc);
   background-size: 200% 200%;
-  -webkit-background-clip: text;
   background-clip: text;
-  display: inline-block;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: #000; /* Text color when not hovered */
+  transition: background-position 0.3s, color 0.3s;
+  align-items: center;
+
+  .diamond-icon {
+    font-size: 20px; /* Adjust the size as needed */
+    margin-right: 8px; /* Adjust the spacing between the icon and text */
+  }
+
+  &:hover {
+    background-position: 100% 0;
+    color: #fff; /* Text color on hover */
+  }
 `;
+
 
 const SearchContainer = styled.div`
   display: flex;
   align-items: center;
-  background-color: rgba(255, 255, 255, 0.1);
+  background: linear-gradient(
+    45deg,
+    #ffcc00,
+    #ff99cc,
+    #cc99ff,
+    #99ccff,
+    #66ffcc
+  ); /* Apply a gradient background */
   padding: 5px;
   border-radius: 20px;
 `;
@@ -68,10 +90,22 @@ const DropdownMenu = styled.div`
 
 const DropdownMenuItem = styled.div`
   padding: 10px;
+  background: linear-gradient(45deg, #ffcc00, #ff99cc, #cc99ff, #99ccff, #66ffcc);
+  background-size: 200% 200%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: #000; /* Text color when not hovered */
+
+  transition: background-position 0.3s, color 0.3s;
+
   &:hover {
-    background-color: #f0f0f0;
+    background-position: 100% 0;
+    color: #fff; /* Text color on hover */
   }
 `;
+
+
 
 const Header = () => {
   const [showWriteDropdown, setShowWriteDropdown] = useState(false);
@@ -98,18 +132,9 @@ const Header = () => {
 
   return (
     <Navbar>
-      <Logo>RWB</Logo>
+      <Logo><i className="bi bi-gem diamond-icon"></i>RWB</Logo>
       <SearchContainer>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          fill="currentColor"
-          className="bi bi-search"
-          viewBox="0 0 16 16"
-        >
-          <path d="M6.571 12.586a6.5 6.5 0 1 0-1.985-1.985L.5 13.071l1.414 1.414 10.1-10.1a6.5 6.5 0 0 0-1.443-1.44l-10.1 10.1L.5 13.071z" />
-        </svg>
+      <i className="bi bi-gem diamond-icon "></i>
         <SearchInput type="text" placeholder="Search..." />
       </SearchContainer>
       <NavItems>
