@@ -158,6 +158,7 @@ function StoryDetails() {
           <h3>
             <Link to="/story-list">Back to Story List</Link>
           </h3>
+          <h3><Link to={`/chapter?storyId=${story.id}`}>Add Chapter</Link></h3>
           <h3>
             <button onClick={handleEditStoryClick}>Edit Story</button>
             <button onClick={handleDeleteStoryClick}>Delete Story</button>
@@ -169,5 +170,4 @@ function StoryDetails() {
 }
 
 export default StoryDetails;
-
 

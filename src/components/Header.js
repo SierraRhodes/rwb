@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Dropdown } from 'react-bootstrap';
-import { Link } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Navbar = styled.nav`
   display: flex;
@@ -42,8 +42,8 @@ const SearchInput = styled.input`
 const NavItems = styled.div`
   display: flex;
   gap: 20px;
+  position: relative; /* Add relative positioning to the NavItems container */
 `;
-
 
 const NavItem = styled.div`
   color: #ffffff;
@@ -55,22 +55,47 @@ const NavItem = styled.div`
   }
 `;
 
+const DropdownMenu = styled.div`
+  position: absolute;
+  top: 100%; /* Position the dropdown below the NavItem */
+  left: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  display: ${props => (props.show ? 'block' : 'none')}; /* Control visibility based on 'show' prop */
+`;
+
+const DropdownMenuItem = styled.div`
+  padding: 10px;
+  &:hover {
+    background-color: #f0f0f0;
+  }
+`;
+
 const Header = () => {
   const [showWriteDropdown, setShowWriteDropdown] = useState(false);
+  const [showAccountDropdown, setShowAccountDropdown] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
+  const navigate = useNavigate();
 
   const toggleWriteDropdown = () => {
-    console.log("toggleWriteDropdown called");
     setShowWriteDropdown(prevState => !prevState);
   };
 
+  const toggleAccountDropdown = () => {
+    setShowAccountDropdown(prevState => !prevState);
+  };
+
   const handleWriteOptionClick = (option) => {
-    console.log("handleWriteOptionClick called with option:", option);
     setSelectedOption(option);
     toggleWriteDropdown();
-
-    
   };
+
+  const navigateTo = (path) => {
+    navigate(path);
+  };
+
   return (
     <Navbar>
       <Logo>RWB</Logo>
@@ -88,25 +113,33 @@ const Header = () => {
         <SearchInput type="text" placeholder="Search..." />
       </SearchContainer>
       <NavItems>
-        <NavItem onClick={toggleWriteDropdown}>Write</NavItem>
         <NavItem>Live Streams</NavItem>
         <NavItem>Connect</NavItem>
-        <NavItem><Link to="/register">Register</Link></NavItem>
-        <NavItem><Link to="/login">Log In</Link></NavItem>
-        <NavItem><Link to="/logout">Log Out</Link></NavItem>
+        <NavItem onClick={toggleWriteDropdown}>Write</NavItem>
+        {/* The DropdownMenu component for "Write" */}
+        <DropdownMenu show={showWriteDropdown}>
+          <DropdownMenuItem onClick={() => handleWriteOptionClick('create')}>
+            <span onClick={() => navigateTo("/story-form")}>Create New Story</span>
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => handleWriteOptionClick('edit')}>
+            <span onClick={() => navigateTo("/story-list")}>Edit Existing Story</span>
+          </DropdownMenuItem>
+        </DropdownMenu>
+        {/* End of DropdownMenu for "Write" */}
+        <NavItem onClick={toggleAccountDropdown}>Account</NavItem>
+        {/* The DropdownMenu component for "Account" */}
+        <DropdownMenu show={showAccountDropdown}>
+          <DropdownMenuItem onClick={() => navigateTo("/register")}>Create an Account</DropdownMenuItem>
+          <DropdownMenuItem onClick={() => navigateTo("/login")}>Log In</DropdownMenuItem>
+          <DropdownMenuItem onClick={() => navigateTo("/logout")}>Log Out</DropdownMenuItem>
+          <DropdownMenuItem onClick={() => navigateTo("/")}>Profile</DropdownMenuItem>
+          <DropdownMenuItem onClick={() => navigateTo("/")}>Inbox</DropdownMenuItem>
+        </DropdownMenu>
       </NavItems>
-      <Dropdown show={showWriteDropdown}>
-        <Dropdown.Menu>
-          <Dropdown.Item onClick={() => handleWriteOptionClick('create')}>
-          <Link to="/story-form">Create New Story</Link>
-          </Dropdown.Item>
-          <Dropdown.Item onClick={() => handleWriteOptionClick('edit')}>
-          <Link to="/story-list">Edit Existing Story</Link>
-          </Dropdown.Item>
-        </Dropdown.Menu>
-      </Dropdown>
     </Navbar>
   );
 };
 
 export default Header;
+
+

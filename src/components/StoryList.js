@@ -6,6 +6,7 @@ function StoryList({ stories, user }) {
   const userStories = Array.isArray(stories) ? stories.filter((story) => story.userId === user.id) : [];
   console.log("stories", userStories);
   console.log("user", user);
+
   return (
     <div>
       <h2>Your Stories</h2>
@@ -29,3 +30,4 @@ function StoryList({ stories, user }) {
 }
 
 export default StoryList;
+
