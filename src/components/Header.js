@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import Search from "./Search";
 
 const Navbar = styled.nav`
   display: flex;
@@ -35,30 +36,6 @@ const Logo = styled.div`
     background-position: 100% 0;
     color: #fff; /* Text color on hover */
   }
-`;
-
-
-const SearchContainer = styled.div`
-  display: flex;
-  align-items: center;
-  background: linear-gradient(
-    45deg,
-    #ffcc00,
-    #ff99cc,
-    #cc99ff,
-    #99ccff,
-    #66ffcc
-  ); /* Apply a gradient background */
-  padding: 5px;
-  border-radius: 20px;
-`;
-
-const SearchInput = styled.input`
-  border: none;
-  background: none;
-  color: #ffffff;
-  outline: none;
-  margin-left: 10px;
 `;
 
 const NavItems = styled.div`
@@ -130,13 +107,16 @@ const Header = () => {
     navigate(path);
   };
 
+  const handleSearch = (query) => {
+    // Implement your search logic here, e.g., navigate to search results
+    navigate(`/search?q=${query}`);
+  };
+
   return (
     <Navbar>
       <Logo><i className="bi bi-gem diamond-icon"></i>RWB</Logo>
-      <SearchContainer>
-      <i className="bi bi-gem diamond-icon "></i>
-        <SearchInput type="text" placeholder="Search..." />
-      </SearchContainer>
+      <Search onSearch={handleSearch} />
+        
       <NavItems>
         <NavItem>Live Streams</NavItem>
         <NavItem>Connect</NavItem>

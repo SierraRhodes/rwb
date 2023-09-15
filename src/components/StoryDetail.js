@@ -1,5 +1,5 @@
 //Shows the full details of a selected stories when the user clicks on a specific stories in the list.
-//Such as the summary and the chapters 
+//Such as the description and the chapters 
 
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -26,7 +26,7 @@ function StoryDetails() {
           setStory({
             id: storyDoc.id,
             title: storyData.title,
-            summary: storyData.summary,
+            description: storyData.description,
             genre: storyData.genre,
           });
 
@@ -56,7 +56,7 @@ function StoryDetails() {
     // Initialize editedStory with the current story data
     setEditedStory({
       title: story.title,
-      summary: story.summary,
+      description: story.description,
       genre: story.genre,
     });
   };
@@ -73,7 +73,7 @@ function StoryDetails() {
       setStory({
         id: reloadedStoryDoc.id,
         title: reloadedStoryData.title,
-        summary: reloadedStoryData.summary,
+        description: reloadedStoryData.description,
         genre: reloadedStoryData.genre,
       });
     } catch (error) {
@@ -86,7 +86,7 @@ function StoryDetails() {
     // Reset editedStory to the current story data
     setEditedStory({
       title: story.title,
-      summary: story.summary,
+      description: story.description,
       genre: story.genre,
     });
   };
@@ -121,8 +121,8 @@ function StoryDetails() {
           />
           <input
             type="text"
-            value={editedStory.summary}
-            onChange={(e) => setEditedStory({ ...editedStory, summary: e.target.value })}
+            value={editedStory.description}
+            onChange={(e) => setEditedStory({ ...editedStory, description: e.target.value })}
           />
           <input
             type="text"
@@ -136,8 +136,8 @@ function StoryDetails() {
       ) : (
         <div>
           <h2>{story.title}</h2>
-          <h3>Summary</h3>
-          {story.summary && <p>{story.summary}</p>}
+          <h3>Description</h3>
+          {story.description && <p>{story.description}</p>}
           {story.genre && <p>{story.genre}</p>}
 
           <h3>Chapters:</h3>

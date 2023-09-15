@@ -11,6 +11,8 @@ import Chapter from "./Chapter";
 import StoryContainer from "./StoryContainer";
 import ChapterDetail from "./ChapterDetail";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Library from "./Library";
+import SearchResults from "./SearchResults"
 //import styled, { ThemeProvider } from 'styled-components';
 
 
@@ -20,7 +22,10 @@ function App() {
     <div className="app">
        <Router>
       <Header />
+      <Library />
       <Routes>
+        <Route path="/search/:q" element={<SearchResults />} />
+        <Route path="/search" element={<SearchResults />} />
         <Route path= "/story-list" element={<StoryContainer />} /> 
         <Route path= "/chapter" element={<Chapter />} />
         <Route path="/story-detail/:id" element={<StoryDetail />} />

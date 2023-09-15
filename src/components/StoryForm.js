@@ -36,7 +36,6 @@ const FormSection = styled.div`
   background-color: rgba(255, 255, 255, 0.1); /* Add a background color */
   border-radius: 10px; /* Add border radius for a rounded look */
   justify-content: center; /* Center horizontally */
-  border: solid black;
 `;
 
 // Style the form labels
@@ -89,7 +88,9 @@ const FormButton = styled.button`
 `;
 
 const BookCoverContainer = styled.div`
+  margin-left: 50px;
   padding: 20px; /* Add padding to the book cover container */
+  display: left;
 `;
 
 // Style the success message
