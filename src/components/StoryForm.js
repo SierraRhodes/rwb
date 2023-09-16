@@ -9,9 +9,10 @@ import styled from 'styled-components'; // Import styled-components for styling
 const FormContainer = styled.div`
   display: flex;
   justify-content: center; /* Center horizontally */
-  align-items: flex-start; /* Align items to the top */
+  align-items: center; /* Align items to the top */
   padding: 20px; /* Add padding around the entire form container */
-  border: 2px black solid;
+  //border: 2px black solid;
+  //background: black;
 `;
 
 // Create a styled component for the book cover image (aside)
@@ -26,17 +27,23 @@ const Aside = styled.aside`
 const BookCover = styled.img`
   max-width: 300px; /* Adjust the image size as needed */
   height: 400px;
-  margin-right: 20px; /* Increase spacing between the aside and form */
+  margin-right: 40px; /* Increase spacing between the aside and form */
 `;
 
 // Create a styled component for the form section containing title, description, genre, and tags
 const FormSection = styled.div`
-  flex: 1; /* Take up remaining space */
-  padding: 20px; /* Add padding around the form section */
-  background-color: rgba(255, 255, 255, 0.1); /* Add a background color */
-  border-radius: 10px; /* Add border radius for a rounded look */
-  justify-content: center; /* Center horizontally */
+  flex: 1;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
+  justify-content: center;
+  //border: 2px solid black;
+  margin-right: 40px;
+
+  /* Add a box shadow that transitions from black to white */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1), 0 0 20px rgba(255, 255, 255, 0.1);
 `;
+
 
 // Style the form labels
 const FormLabel = styled.label`
@@ -47,7 +54,7 @@ const FormLabel = styled.label`
 
 // Style the form inputs and textarea
 const FormInput = styled.input`
-  width: 50%;
+  width: 90%;
   padding: 10px; /* Add padding to inputs */
   margin-bottom: 20px; /* Add spacing between inputs */
   border: 1px solid #ccc; /* Add a border */
@@ -57,7 +64,7 @@ const FormInput = styled.input`
 `;
 
 const FormTextarea = styled.textarea`
-  width: 50%;
+  width: 90%;
   height: 200px; /* Set a fixed height for the textarea */
   padding: 10px; /* Add padding to textarea */
   margin-bottom: 20px; /* Add spacing between textarea and other inputs */
@@ -91,15 +98,6 @@ const BookCoverContainer = styled.div`
   margin-left: 50px;
   padding: 20px; /* Add padding to the book cover container */
   display: left;
-`;
-
-// Style the success message
-const SuccessMessage = styled.div`
-  background-color: #5cb85c; /* Success message background color */
-  color: #fff; /* Success message text color */
-  padding: 10px; /* Add padding to the success message */
-  border-radius: 5px; /* Add border radius */
-  margin-bottom: 20px; /* Add spacing between the message and other elements */
 `;
 
 function StoryForm() {

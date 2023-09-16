@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import Search from './Search'; // Import the Search component
+import Search from './Search'; 
 
 function BookList() {
-  const [stories, setStories] = useState([]); // Replace with your story data
+  const [stories, setStories] = useState([]); 
   const [filteredStories, setFilteredStories] = useState([]); // Filtered stories based on search query
 
   useEffect(() => {
-    // Replace 'your_api_endpoint_here' with the actual URL of your API endpoint for stories
     fetch('/stories') // Replace with the correct API endpoint
       .then((response) => response.json())
       .then((data) => {
