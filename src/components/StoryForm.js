@@ -142,7 +142,7 @@ function StoryForm() {
         {successMessage && <div className="success-message">{successMessage}</div>}
         <form onSubmit={handleSubmit}>
           <div>
-            <FormLabel htmlFor="title">Title</FormLabel>
+            <h5><FormLabel htmlFor="title">Title</FormLabel></h5>
             <FormInput
               type="text"
               id="title"
@@ -152,7 +152,7 @@ function StoryForm() {
             />
           </div>
           <div>
-            <FormLabel htmlFor="description">Description</FormLabel>
+            <h5><FormLabel htmlFor="description">Description</FormLabel></h5>
             <FormTextarea
               id="description"
               value={description}
@@ -161,7 +161,7 @@ function StoryForm() {
             />
           </div>
           <div>
-            <FormLabel htmlFor="genre">Genre</FormLabel>
+            <h5><FormLabel htmlFor="genre">Genre</FormLabel></h5>
             <FormInput
               type="text"
               id="genre"
@@ -170,7 +170,7 @@ function StoryForm() {
             />
           </div>
           <div>
-            <FormLabel htmlFor="tags">Tags (comma-separated)</FormLabel>
+            <h5><FormLabel htmlFor="tags">Tags (comma-separated)</FormLabel></h5>
             <FormInput
               type="text"
               id="tags"
