@@ -1,9 +1,9 @@
 //A form for creating or updating stories. It may contain fields like title, content, and privacy settings.
 import React, { useState } from 'react';
-import { db, auth } from '../firebase'; // Import your Firestore instance
+import { db, auth } from '../firebase'; 
 import { collection, addDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components'; // Import styled-components for styling
+import styled from 'styled-components'; 
 
 // Create a styled component for the form container
 const FormContainer = styled.div`
@@ -38,7 +38,7 @@ const FormSection = styled.div`
   border-radius: 5px;
   justify-content: center;
   //border: 2px solid black;
-  margin-right: 40px;
+  margin-right: 80px;
 
   /* Add a box shadow that transitions from black to white */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1), 0 0 20px rgba(255, 255, 255, 0.1);
@@ -85,7 +85,7 @@ const FormButton = styled.button`
   cursor: pointer;
   transition: background-color 0.3s ease; /* Add a smooth transition on hover */
 
-  display: flex;
+  display: center;
   justify-content: center; /* Horizontally center the button */
   align-items: center; /* Vertically center the button */
 
