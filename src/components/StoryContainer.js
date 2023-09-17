@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import StoryList from './StoryList';
-import { db, auth } from '../firebase'; // Import your Firestore and Firebase Authentication instances
-import { collection, getDocs } from 'firebase/firestore'; // Import Firestore functions
-
+import { db, auth } from '../firebase';
+import { collection, getDocs } from 'firebase/firestore'; 
 function StoryContainer() {
   const [user, setUser] = useState(null);
   const [stories, setStories] = useState([]);
@@ -21,6 +20,7 @@ function StoryContainer() {
       });
     } else {
       // If no user is authenticated, set user state to null
+      <h1>You must log in first!</h1>
       setUser(null);
     }
   };
@@ -29,7 +29,7 @@ function StoryContainer() {
   const fetchStories = async () => {
     try {
       // Reference the 'stories' collection in Firestore
-      const storiesRef = collection(db, 'stories');
+      const storiesRef = collection(db, 'stories',);
 
       // Fetch all documents (stories) from the collection
       const querySnapshot = await getDocs(storiesRef);
@@ -63,8 +63,8 @@ function StoryContainer() {
 
   return (
     <div>
-      {/* Pass the 'user' and 'stories' props to the 'StoryList' component */}
-      <StoryList stories={stories} user={user}  />
+      {/* Passes the 'user' and 'stories' props to the 'StoryList' component */}
+      <StoryList stories={stories} user={user} />
     </div>
   );
 }

@@ -13,7 +13,6 @@ const StoryItem = styled.div`
   width: calc(25% - 20px); /* 25% width for each story item with 20px gap */
   padding: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1), 0 0 20px rgba(255, 255, 255, 0.1);
-  //border: 1px solid #ccc;
   border-radius: 5px;
   cursor: pointer;
 `;
@@ -21,10 +20,8 @@ const StoryItem = styled.div`
 const Title = styled.h2`
   text-align: center; /* Center the text horizontally */
   margin: 20px 0; /* Center the text vertically with some top and bottom margin */
-  font-family: Arial, sans-serif; 
+  font-family: Arial, sans-serif;
 `;
-
-
 
 function StoryList({ stories, user }) {
   const navigate = useNavigate();
@@ -43,20 +40,9 @@ function StoryList({ stories, user }) {
       <Title>My Stories</Title>
       <StoryListContainer>
         {stories.map((story) => (
-          <StoryItem
-            key={story.id}
-            onClick={() => handleStoryClick(story.id)}
-          >
+          <StoryItem key={story.id} onClick={() => handleStoryClick(story.id)}>
             <h3>{story.title}</h3>
-            <h4>Chapters:</h4>
-            <ul>
-              {story.chapters &&
-                story.chapters.map((chapter) => (
-                  <li key={chapter.id}>
-                    <h5>{chapter.title}</h5>
-                  </li>
-                ))}
-            </ul>
+            <p>Chapters: {stories.chapters ? stories.chapters.length : 0}</p>
           </StoryItem>
         ))}
       </StoryListContainer>
@@ -65,4 +51,5 @@ function StoryList({ stories, user }) {
 }
 
 export default StoryList;
+
 

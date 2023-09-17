@@ -17,6 +17,7 @@ const SearchContainer = styled.div`
   padding: 5px;
   border-radius: 20px;
   width: 40%;
+  margin-right: 10px;
 
   .diamond-icon {
     font-size: 20px; /* Adjust the size as needed */
@@ -30,7 +31,9 @@ const SearchInput = styled.input`
   color: #ffffff;
   outline: none;
   margin-left: 10px;
+  margin-right: 320px;
 `;
+
 
 function Search({ onSearch }) {
   const [searchQuery, setSearchQuery] = useState('');
@@ -48,22 +51,25 @@ function Search({ onSearch }) {
       
       {/* Add a Link to SearchResults */}
       <Link to={`/search/${searchQuery}`} className="search-link">
+
   {/* Magnifying glass icon using inline SVG */}
+  <div>
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="16"
     height="16"
     fill="currentColor"
-    className="bi bi-search"
+    className="bi bi-box"
     viewBox="0 0 16 16"
   >
     <path
       fillRule="evenodd"
-      d="M10.742 9.344a6.5 6.5 0 1 0-1.397 1.398h0l-.001.001A6.5 6.5 0 0 0 10.742 9.344zM11 6.5a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0z"
+      d="M11.25 1a.75.75 0 0 1 .75.75V3h2.5a.5.5 0 0 1 0 1H12v3.75a2.25 2.25 0 0 1-4.5 0V4H.75a.75.75 0 0 1-.75-.75V1a.75.75 0 0 1 .75-.75h13.5zM2 7.25A1.25 1.25 0 0 1 3.25 6h9.5A1.25 1.25 0 0 1 14 7.25V14H2V7.25z"
     />
   </svg>
+</div>
   {/* End of magnifying glass icon */}
-  Search
+  
 </Link>
     </SearchContainer>
   );
