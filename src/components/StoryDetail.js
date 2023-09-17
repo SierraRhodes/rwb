@@ -251,12 +251,13 @@ function StoryDetails() {
           </FormSection>
         </FormContainer>
       ) : (
-        <FormContainer>
-           <BookCoverContainer className="book-cover">
+        <div>
+        <BookCoverContainer className="book-cover">
           <Aside>
-            <BookCover src="crystaltexture.webp" alt="Upload Book Cover" ></BookCover>
+            <BookCover src="crystaltexture.webp" alt="Upload Book Cover" />
           </Aside>
-          </BookCoverContainer>
+        </BookCoverContainer>
+        <FormContainer>
           <FormSection>
           <h5>Title</h5>
           {story.title && <p>{story.title}</p>}
@@ -277,8 +278,8 @@ function StoryDetails() {
               ))}
             </ul>
           ) : (
-            <><p>No chapters available for this story.  <Link to={`/chapter?storyId=${story.id}`}>Add Chapter</Link></p>
-            <h3><Link to={`/chapter?storyId=${story.id}`}>Add Chapter</Link></h3></>
+            <><p>No chapters available for this story.</p></>
+          
           )}
           </FormSection>
           <ButtonContainer>
@@ -287,7 +288,8 @@ function StoryDetails() {
             <FormButton onClick={() => navigate(`/chapter?storyId=${story.id}`)}>Add Chapter</FormButton>
             <FormButton onClick={() => navigate('/story-list')}>Back to Story List</FormButton>
           </ButtonContainer>
-          </FormContainer>    
+          </FormContainer>  
+          </div>  
       )}
     </div>
   );

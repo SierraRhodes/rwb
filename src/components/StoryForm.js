@@ -49,6 +49,7 @@ const FormSection = styled.div`
 const FormLabel = styled.label`
   display: block;
   margin-bottom: 10px; /* Add spacing between labels */
+  font-size: 15px;
   font-weight: bold;
 `;
 
