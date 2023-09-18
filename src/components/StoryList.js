@@ -40,7 +40,7 @@ function StoryList({ stories, user }) {
     <div>
       <Title>My Stories</Title>
       <StoryListContainer>
-        {stories.map((story) => (
+        {userStories.map((story) => (
           <StoryItem key={story.id} onClick={() => handleStoryClick(story.id)}>
             <h3>{story.title}</h3>
             <p>Chapters: {story.chapters ? story.chapters.length : 0}</p>

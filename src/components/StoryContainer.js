@@ -41,7 +41,7 @@ function StoryContainer() {
         fetchedStories.push({
           id: doc.id,
           title: storyData.title,
-          // userId: storyData.userId,
+          userId: storyData.userId,
           // Add other story properties as needed
         });
       });
