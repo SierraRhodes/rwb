@@ -18,10 +18,9 @@ const TitleInput = styled.input`
   margin-bottom: 20px; /* Add space between the title input and the editor */
   font-size: 18px; /* Increase font size for the title input */
   padding: 10px;
-  border: 2px solid white;
 
 
-    border: none; /* Remove the border when the input is focused */
+  border: none; /* Remove the border when the input is focused */
 
 `;
 
@@ -33,36 +32,47 @@ const StyledQuillEditor = styled(ReactQuill)`
   .ql-toolbar {
     border: none; /* Remove the border around the editor tools */
   }
-  
+
   .ql-editor {
     font-family: Arial, sans-serif;
     font-size: 16px;
     line-height: 1.5;
     max-width: 100%;
-    padding: 20px;
+    //padding: 20px;
     width: 800px;
-    height: 800px;
-    border: none; /* Remove the border around the editor content */
+    height: 600px;
+    //border: none; /* Remove the border around the editor content */
   }
 `;
 
 const FormButton = styled.button`
-  background-color: #007BFF; /* Button background color */
-  color: #fff; /* Button text color */
+  background-color: #007BFF;
+  color: #fff;
   border: none;
-  padding: 10px 20px; /* Add padding to the button */
-  border-radius: 5px; /* Add border radius to the button */
-  cursor: pointer;
-  transition: background-color 0.3s ease; /* Add a smooth transition on hover */
+  padding: 10px 20px;
+  border-radius: 5px;
+  
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Add a smooth transition for background color and transform */
 
-  display: center;
-  justify-content: center; /* Horizontally center the button */
-  align-items: center; /* Vertically center the button */
+  display: flex; /* Use flex to center the content both horizontally and vertically */
+  justify-content: center;
+  align-items: center;
 
   &:hover {
-    background-color: #0056b3; /* Change background color on hover */
+    background-color: #0056b3;
+    transform: scale(1.05); /* Add a slight scale effect on hover */
+  }
+  
+  &:active {
+    transform: scale(0.95); /* Add a scale effect when the button is clicked */
   }
 `;
+
+const FormButtonContainer = styled.div`
+padding: 20px;
+`;
+
+
 
 function Chapter() {
   const location = useLocation();
@@ -105,6 +115,8 @@ function Chapter() {
   };
 
   return (
+
+ 
     <form className="chapter" onSubmit={handleSubmit}>
       <FormContainer>
         <TitleInput
@@ -112,6 +124,7 @@ function Chapter() {
           value={chapterTitle}
           onChange={handleTitleChange}
           placeholder="Chapter Title"
+          required
         />
 
         <StyledQuillEditor
@@ -119,9 +132,9 @@ function Chapter() {
           onChange={handleContentChange}
           placeholder="Write your chapter content here..."
         />
-         <div>
+        <FormButtonContainer>
       <FormButton type="submit">Post Chapter</FormButton>
-      </div>
+      </FormButtonContainer>
       </FormContainer>
      
     </form>

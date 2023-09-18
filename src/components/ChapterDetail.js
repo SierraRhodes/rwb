@@ -3,7 +3,115 @@ import { useParams } from 'react-router-dom';
 import { doc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import { useNavigate } from 'react-router-dom';
+import DOMPurify from 'dompurify';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+import styled from 'styled-components';
 
+const FormContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  padding: 20px;
+`;
+
+const TitleInput = styled.input`
+  margin-bottom: 20px; /* Add space between the title input and the editor */
+  font-size: 18px; /* Increase font size for the title input */
+  padding: 10px;
+  border: none; /* Remove the border when the input is focused */
+
+`;
+
+const TitleInput2 = styled.input`
+  margin-bottom: 20px;
+  font-size: 18px;
+  padding: 10px;
+  display: flex;
+  text-align: center; /* Center-align the text */
+  border: none;
+`;
+
+const StyledQuillEditor = styled(ReactQuill)`
+  .ql-container {
+    border: none; /* Remove the border around the editor container */
+  }
+
+  .ql-toolbar {
+    border: none; /* Remove the border around the editor tools */
+  }
+
+  .ql-editor {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    max-width: 100%;
+    //padding: 20px;
+    width: 800px;
+    height: 600px;
+    //border: none; /* Remove the border around the editor content */
+  }
+`;
+
+const StyledQuillEditor2 = styled(ReactQuill)`
+  .ql-container {
+    border: none; /* Remove the border around the editor container */
+  }
+
+  .ql-toolbar {
+    display: none;
+    border: none; /* Remove the border around the editor tools */
+  }
+
+  .ql-editor {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    max-width: 100%;
+    //padding: 20px;
+    width: 800px;
+    height: 600px;
+    //border: none; /* Remove the border around the editor content */
+  }
+`;
+
+const SeparatorLine = styled.hr`
+  width: 60%;
+  border: 2px solid #ddd; /* Add a 1px solid gray border as the separator */
+  margin: 5px 0; /* Add some vertical spacing around the separator */
+`;
+
+const FormButton = styled.button`
+  background-color: #007BFF;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Add a smooth transition for background color and transform */
+
+  display: flex-right; /* Use flex to center the content both horizontally and vertically */
+  justify-content: center;
+
+
+  &:hover {
+    background-color: #0056b3;
+    transform: scale(1.05); /* Add a slight scale effect on hover */
+  }
+  
+  &:active {
+    transform: scale(0.95); /* Add a scale effect when the button is clicked */
+  }
+`;
+
+const FormButtonContainer = styled.div`
+  padding: 20px 0; /* Add vertical spacing above and below the buttons */
+  display: flex;
+  flex-direction: row; /* Stack the buttons vertically */
+  align-items: center; /* Center-align the buttons horizontally */
+  gap: 10px;
+`;
 
 function ChapterDetail() {
   const { storyId, chapterId } = useParams();
@@ -43,6 +151,10 @@ function ChapterDetail() {
 
     fetchChapter();
   }, [storyId, chapterId]);
+
+  const sanitizeHtml = (html) => {
+    return DOMPurify.sanitize(html);
+  };
 
   const handleEditClick = () => {
     setIsEditing(true); // Enable editing mode
@@ -101,26 +213,35 @@ function ChapterDetail() {
   return (
     <div>
       {isEditing ? (
-        <div>
-          <input
+        <FormContainer>
+          <TitleInput
             type="text"
             value={editedChapter.title}
             onChange={(e) => setEditedChapter({ ...editedChapter, title: e.target.value })}
           />
-          <textarea
+          <StyledQuillEditor
             value={editedChapter.content}
-            onChange={(e) => setEditedChapter({ ...editedChapter, content: e.target.value })}
+            onChange={(value) => setEditedChapter({ ...editedChapter, content: value })}
           />
-          <button onClick={handleSaveClick}>Save</button>
-          <button onClick={handleDeleteClick}>Delete</button>
-          <button onClick={handleCancelClick}>Cancel</button>
-        </div>
+          <FormButtonContainer>
+          <FormButton onClick={handleSaveClick}>Save</FormButton>
+          <FormButton onClick={handleDeleteClick}>Delete</FormButton>
+          <FormButton onClick={handleCancelClick}>Cancel</FormButton>
+          </FormButtonContainer>
+        </FormContainer>
       ) : (
-        <div>
-          <h2>{chapter.title}</h2>
-          <p>{chapter.content}</p>
-          <button onClick={handleEditClick}>Edit</button>
-        </div>
+        <FormContainer>
+          <TitleInput2
+          value={chapter.title}
+          readOnly={true} // Prevent editing the title
+        />
+        <SeparatorLine />
+          <StyledQuillEditor2
+            readOnly={true} // Prevent editing when not in editing mode
+            value={chapter.content}
+          />
+          <FormButton onClick={handleEditClick}>Edit</FormButton>
+        </FormContainer>
       )}
     </div>
   );

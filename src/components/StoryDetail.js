@@ -268,7 +268,7 @@ function StoryDetails() {
 
           <h5>Chapters</h5>
           {chapters.length > 0 ? (
-            <ul>
+            <ol>
               {chapters.map((chapter) => (
                 <li key={chapter.id}>
                   <h4>
@@ -276,7 +276,7 @@ function StoryDetails() {
                   </h4>
                 </li>
               ))}
-            </ul>
+            </ol>
           ) : (
             <><p>No chapters available for this story.</p></>
           
