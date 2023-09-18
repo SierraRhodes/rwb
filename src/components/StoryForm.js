@@ -18,11 +18,12 @@ const Aside = styled.aside`
   width: 300px;
   height: 500px;
   margin-right: 20px;
-  border: 2px black solid;
+  //border: 2px black solid;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden; /* Hide any overflowing content */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1), 0 0 20px rgba(255, 255, 255, 0.1);
 `;
 
 const BookCover = styled.img`
@@ -80,6 +81,7 @@ const FormButton = styled.button`
   color: #fff;
   border: none;
   padding: 10px 20px;
+  padding-top: 10px;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
@@ -87,6 +89,7 @@ const FormButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+
 
   &:hover {
     background-color: #0056b3;
@@ -158,7 +161,7 @@ function StoryForm() {
             id="image"
             onChange={handleImageChange}
             style={{ display: 'none' }}
-            required
+            required         
           />
         </Aside>
       </BookCoverContainer>

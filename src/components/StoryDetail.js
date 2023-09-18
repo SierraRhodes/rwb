@@ -21,17 +21,20 @@ const FormContainer = styled.div`
 
 // Create a styled component for the book cover image (aside)
 const Aside = styled.aside`
-  flex: 0; /* Make the aside not grow */
-  max-width: 300px; /* Adjust the max width as needed */
-  margin-right: 200px; /* Increase spacing between the aside and form */
-  border: 2px black solid;
-  height: 400px;
+  width: 300px;
+  height: 500px;
+  margin-right: 20px;
+  //border: 2px black solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden; /* Hide any overflowing content */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1), 0 0 20px rgba(255, 255, 255, 0.1);
 `;
 
 const BookCover = styled.img`
-  max-width: 300px; /* Adjust the image size as needed */
-  height: 400px;
-  margin-right: 40px; /* Increase spacing between the aside and form */
+  width: auto;
+  height: 100%;
 `;
 
 const BookCoverContainer = styled.div`
