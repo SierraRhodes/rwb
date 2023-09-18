@@ -19,8 +19,9 @@ function BookList() {
   }, []);
 
   const handleSearch = (query) => {
+    const lowercaseQuery = query.toLowerCase();
     const filtered = stories.filter((story) =>
-      story.title.toLowerCase().includes(query.toLowerCase())
+      story.title.toLowerCase().includes(lowercaseQuery)
     );
     setFilteredStories(filtered);
   };

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import StoryList from './StoryList';
+//import SearchResults from './SearchResults';
 import { db, auth } from '../firebase';
 import { collection, getDocs } from 'firebase/firestore'; 
 function StoryContainer() {
@@ -75,6 +76,7 @@ console.log('user', user);
       {/* Passes the 'user' and 'stories' props to the 'StoryList' component */}
       <StoryList stories={stories} user={user} />
     </div>
+    
   );
 }
 
