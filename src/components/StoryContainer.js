@@ -24,36 +24,46 @@ function StoryContainer() {
   };
 
   // Function to fetch stories from Firestore
-  const fetchStories = async () => {
-    try {
-      // Reference the 'stories' collection in Firestore
-      const storiesRef = collection(db, 'stories',);
+ // Function to fetch stories from Firestore with chapters
+const fetchStories = async () => {
+  try {
+    const storiesRef = collection(db, 'stories');
+    const querySnapshot = await getDocs(storiesRef);
+    const fetchedStories = [];
 
-      // Fetch all documents (stories) from the collection
-      const querySnapshot = await getDocs(storiesRef);
+    for (const doc of querySnapshot.docs) {
+      const storyData = doc.data();
+      const storyId = doc.id;
 
-      // Initialize an array to store the fetched stories
-      const fetchedStories = [];
+      // Fetch chapters for the current story
+      const chaptersRef = collection(db, 'stories', storyId, 'chapters');
+      const chaptersSnapshot = await getDocs(chaptersRef);
+      const fetchedChapters = [];
 
-      // Iterate through the documents and extract data
-      querySnapshot.forEach((doc) => {
-        const storyData = doc.data();
-        fetchedStories.push({
-          id: doc.id,
-          title: storyData.title,
-          userId: storyData.userId,
-          // Add other story properties as needed
+      chaptersSnapshot.forEach((chapterDoc) => {
+        const chapterData = chapterDoc.data();
+        fetchedChapters.push({
+          id: chapterDoc.id,
+          title: chapterData.title,
+          // Add other chapter properties as needed
         });
       });
-      console.log("stories:", fetchedStories);
-     
-      
-      // Update the 'stories' state with the fetched data
-      setStories(fetchedStories);
-    } catch (error) {
-      console.error('Error fetching stories:', error);
+
+      fetchedStories.push({
+        id: storyId,
+        title: storyData.title,
+        userId: storyData.userId,
+        chapters: fetchedChapters, // Add the chapters to the story
+        // Add other story properties as needed
+      });
     }
-  };
+
+    setStories(fetchedStories);
+  } catch (error) {
+    console.error('Error fetching stories:', error);
+  }
+};
+
 
   useEffect(() => {
     fetchUser(); // Fetch user data
