@@ -27,6 +27,7 @@ function StoryList({ stories, user }) {
   const navigate = useNavigate();
 
   const userStories = Array.isArray(stories) ? stories.filter((story) => story.userId === user.id) : [];
+  console.log("what stories", stories);
   console.log('stories', userStories);
   console.log('user', user);
 
@@ -42,7 +43,7 @@ function StoryList({ stories, user }) {
         {stories.map((story) => (
           <StoryItem key={story.id} onClick={() => handleStoryClick(story.id)}>
             <h3>{story.title}</h3>
-            <p>Chapters: {stories.chapters ? stories.chapters.length : 0}</p>
+            <p>Chapters: {story.chapters ? story.chapters.length : 0}</p>
           </StoryItem>
         ))}
       </StoryListContainer>

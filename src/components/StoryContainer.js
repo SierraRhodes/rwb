@@ -10,17 +10,15 @@ function StoryContainer() {
   // Function to fetch user data
   const fetchUser = () => {
     const currentUser = auth.currentUser;
-
     if (currentUser) {
       // If a user is authenticated, set the user state
       setUser({
         id: currentUser.uid,
-        displayName: currentUser.displayName,
+        // displayName: currentUser.displayName,
         // Add other user data as needed
       });
     } else {
       // If no user is authenticated, set user state to null
-      <h1>You must log in first!</h1>
       setUser(null);
     }
   };
@@ -43,12 +41,13 @@ function StoryContainer() {
         fetchedStories.push({
           id: doc.id,
           title: storyData.title,
+          // userId: storyData.userId,
           // Add other story properties as needed
         });
       });
-
       console.log("stories:", fetchedStories);
-
+     
+      
       // Update the 'stories' state with the fetched data
       setStories(fetchedStories);
     } catch (error) {
@@ -60,7 +59,7 @@ function StoryContainer() {
     fetchUser(); // Fetch user data
     fetchStories(); // Fetch stories
   }, []);
-
+console.log('user', user);
   return (
     <div>
       {/* Passes the 'user' and 'stories' props to the 'StoryList' component */}
