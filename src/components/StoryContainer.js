@@ -15,7 +15,7 @@ function StoryContainer() {
       // If a user is authenticated, set the user state
       setUser({
         id: currentUser.uid,
-        // displayName: currentUser.displayName,
+        displayName: currentUser.displayName,
         // Add other user data as needed
       });
     } else {

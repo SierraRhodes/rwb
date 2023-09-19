@@ -40,8 +40,7 @@ const FormSection = styled.div`
   background-color: rgba(255, 255, 255, 0.1);
   border-radius: 5px;
   justify-content: center;
-  margin-right: 80px;
-
+  margin-right: 40px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1), 0 0 20px rgba(255, 255, 255, 0.1);
 `;
 
@@ -56,7 +55,7 @@ const FormLabel = styled.label`
 // Style the form inputs and textarea
 const FormInput = styled.input`
   width: 90%;
-  padding: 10px;
+  padding: 5px;
   margin-bottom: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
