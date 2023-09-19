@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { auth, db } from '../firebase.js'; // Import your Firestore instance
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import styled from 'styled-components'; 
+import { Link } from 'react-router-dom';
 
 const FormContainer = styled.div`
   display: flex;
@@ -135,6 +136,7 @@ function Register() {
           placeholder="Username"
           required
         />
+        <h6>Already have an account? Log in <Link to="/login">here</Link></h6>
         <FormButton type="submit">Register!</FormButton>
         </FormSection>
       </form>
