@@ -11,23 +11,24 @@ const FormContainer = styled.div`
   justify-content: center; /* Center horizontally */
   align-items: center; /* Align items to the top */
   padding: 20px; /* Add padding around the entire form container */
-  //border: 2px black solid;
-  //background: black;
 `;
 
 // Create a styled component for the book cover image (aside)
 const Aside = styled.aside`
-  flex: 0; /* Make the aside not grow */
-  max-width: 300px; /* Adjust the max width as needed */
-  margin-right: 200px; /* Increase spacing between the aside and form */
-  border: 2px black solid;
-  height: 400px;
+  width: 300px;
+  height: 500px;
+  margin-right: 20px;
+  //border: 2px black solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden; /* Hide any overflowing content */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1), 0 0 20px rgba(255, 255, 255, 0.1);
 `;
 
 const BookCover = styled.img`
-  max-width: 300px; /* Adjust the image size as needed */
-  height: 400px;
-  margin-right: 40px; /* Increase spacing between the aside and form */
+  width: auto;
+  height: 100%;
 `;
 
 // Create a styled component for the form section containing title, description, genre, and tags
@@ -37,18 +38,15 @@ const FormSection = styled.div`
   background-color: rgba(255, 255, 255, 0.1);
   border-radius: 5px;
   justify-content: center;
-  //border: 2px solid black;
   margin-right: 80px;
 
-  /* Add a box shadow that transitions from black to white */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1), 0 0 20px rgba(255, 255, 255, 0.1);
 `;
-
 
 // Style the form labels
 const FormLabel = styled.label`
   display: block;
-  margin-bottom: 10px; /* Add spacing between labels */
+  margin-bottom: 10px;
   font-size: 15px;
   font-weight: bold;
 `;
@@ -56,49 +54,54 @@ const FormLabel = styled.label`
 // Style the form inputs and textarea
 const FormInput = styled.input`
   width: 90%;
-  padding: 10px; /* Add padding to inputs */
-  margin-bottom: 20px; /* Add spacing between inputs */
-  border: 1px solid #ccc; /* Add a border */
-  border-radius: 5px; /* Add border radius */
-  background-color: transparent; /* Make the background transparent */
-  color: #333; /* Set text color */
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: transparent;
+  color: #333;
 `;
 
 const FormTextarea = styled.textarea`
   width: 90%;
-  height: 200px; /* Set a fixed height for the textarea */
-  padding: 10px; /* Add padding to textarea */
-  margin-bottom: 20px; /* Add spacing between textarea and other inputs */
-  border: 1px solid #ccc; /* Add a border */
-  border-radius: 5px; /* Add border radius */
-  background-color: transparent; /* Make the background transparent */
-  color: #333; /* Set text color */
-  resize: none; /* Disable textarea resizing */
-  overflow-y: auto; /* Enable vertical scrolling when content overflows the fixed height */
+  height: 200px;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: transparent;
+  color: #333;
+  resize: none;
+  overflow-y: auto;
 `;
+
 // Style the button
 const FormButton = styled.button`
-  background-color: #007BFF; /* Button background color */
-  color: #fff; /* Button text color */
+  background-color: #007BFF;
+  color: #fff;
   border: none;
-  padding: 10px 20px; /* Add padding to the button */
-  border-radius: 5px; /* Add border radius to the button */
+  padding: 10px 20px;
+  padding-top: 10px;
+  border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease; /* Add a smooth transition on hover */
+  transition: background-color 0.3s ease;
 
-  display: center;
-  justify-content: center; /* Horizontally center the button */
-  align-items: center; /* Vertically center the button */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
 
   &:hover {
-    background-color: #0056b3; /* Change background color on hover */
+    background-color: #0056b3;
   }
 `;
 
 const BookCoverContainer = styled.div`
   margin-left: 50px;
-  padding: 20px; /* Add padding to the book cover container */
-  display: left;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 function StoryForm() {
@@ -107,6 +110,7 @@ function StoryForm() {
   const [tags, setTags] = useState('');
   const [genre, setGenre] = useState('');
   const [successMessage, setSuccessMessage] = useState(null);
+  const [image, setImage] = useState(null); // Add state for the selected image
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
@@ -119,6 +123,7 @@ function StoryForm() {
       genre,
       tags: tags.split(',').map((tag) => tag.trim()),
       userId: user.uid,
+      // You can add the image URL to the newStory object if needed
     };
 
     try {
@@ -132,12 +137,33 @@ function StoryForm() {
     }
   };
 
+  const handleImageChange = (event) => {
+    const selectedImage = event.target.files[0];
+    setImage(selectedImage);
+  };
+
   return (
     <FormContainer>
-      <BookCoverContainer className="book-cover">
-      <Aside>
-        <BookCover src="crystaltexture.webp" alt="Upload Book Cover" /> {/* Replace with the actual image path */}
-      </Aside>
+      <BookCoverContainer>
+        <Aside>
+          <label htmlFor="image" className="upload-label">
+            {image ? (
+              <BookCover src={URL.createObjectURL(image)} alt="Book Cover" />
+            ) : (
+              <div className="upload-placeholder">
+                <span>Click to upload a book cover</span>
+              </div>
+            )}
+          </label>
+          <input
+            type="file"
+            accept="image/*"
+            id="image"
+            onChange={handleImageChange}
+            style={{ display: 'none' }}
+            required         
+          />
+        </Aside>
       </BookCoverContainer>
       <FormSection>
         {successMessage && <div className="success-message">{successMessage}</div>}
@@ -187,3 +213,4 @@ function StoryForm() {
 }
 
 export default StoryForm;
+
