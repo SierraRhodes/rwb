@@ -10,11 +10,12 @@ const StoryListContainer = styled.div`
 `;
 
 const StoryItem = styled.div`
-  width: calc(25% - 20px); /* 25% width for each story item with 20px gap */
+  width: calc(18% - 20px); /* 25% width for each story item with 20px gap */
   padding: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1), 0 0 20px rgba(255, 255, 255, 0.1);
   border-radius: 5px;
   cursor: pointer;
+  
 `;
 
 const Title = styled.h2`

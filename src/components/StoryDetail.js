@@ -34,8 +34,8 @@ const Aside = styled.aside`
 `;
 
 const BookCover = styled.img`
-  width: auto;
-  height: 100%;
+  width: 300px;
+  height: 500px;
 `;
 
 const BookCoverContainer = styled.div`

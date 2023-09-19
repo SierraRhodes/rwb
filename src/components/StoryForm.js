@@ -29,8 +29,8 @@ const Aside = styled.aside`
 `;
 
 const BookCover = styled.img`
-  width: auto;
-  height: 100%;
+  width: 300px;
+  height: 500px;
 `;
 
 // Create a styled component for the form section containing title, description, genre, and tags
