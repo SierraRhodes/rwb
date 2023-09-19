@@ -1,12 +1,13 @@
 //Shows the full details of a selected stories when the user clicks on a specific stories in the list.
 //Such as the description and the chapters 
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { doc, getDoc, collection, getDocs, updateDoc, deleteDoc } from 'firebase/firestore';
-import { db } from '../firebase';
+import { db , storage } from '../firebase';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 
 // Create a styled component for the form container
@@ -117,16 +118,18 @@ const ButtonContainer = styled.div`
 
 function StoryDetails() {
   const { id } = useParams();
-  const imageURL = new URLSearchParams(window.location.search).get('imageURL');
   const [story, setStory] = useState(null);
   const [chapters, setChapters] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [editedStory, setEditedStory] = useState({});
+  const [newImage, setNewImage] = useState(null);
+  const fileInputRef = useRef(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchStory = async () => {
       try {
+        // Fetch story data from Firebase
         const storyDocRef = doc(db, 'stories', id);
         const storyDoc = await getDoc(storyDocRef);
 
@@ -140,6 +143,7 @@ function StoryDetails() {
             imageURL: storyData.imageURL,
           });
 
+          // Fetch chapter data related to the story
           const chaptersRef = collection(storyDocRef, 'chapters');
           const chapterQuerySnapshot = await getDocs(chaptersRef);
           const chapterData = [];
@@ -161,6 +165,11 @@ function StoryDetails() {
     fetchStory();
   }, [id]);
 
+  if (!story) {
+    return <div>Loading...</div>;
+  }
+  console.log(story.imageURL);
+
   const handleEditStoryClick = () => {
     setIsEditing(true);
     // Initialize editedStory with the current story data
@@ -168,11 +177,29 @@ function StoryDetails() {
       title: story.title,
       description: story.description,
       genre: story.genre,
+      imageURL: story.imageURL,
     });
   };
 
   const handleSaveStoryClick = async () => {
     try {
+      // Check if a new image has been uploaded
+      if (newImage) {
+        // Upload the new image to Firebase Storage
+        const storageRef = ref(storage, `story_images/${id}/${newImage.name}`);
+        const uploadTask = uploadBytes(storageRef, newImage);
+
+        // Wait for the upload to complete
+        await uploadTask;
+
+        // Get the download URL of the uploaded image
+        const imageURL = await getDownloadURL(storageRef);
+
+        // Update the edited story data with the new imageURL
+        setEditedStory({ ...editedStory, imageURL });
+      }
+
+      // Update the story data in Firestore with the editedStory
       const storyDocRef = doc(db, 'stories', id);
       await updateDoc(storyDocRef, editedStory);
       setIsEditing(false);
@@ -185,10 +212,39 @@ function StoryDetails() {
         title: reloadedStoryData.title,
         description: reloadedStoryData.description,
         genre: reloadedStoryData.genre,
+        imageURL: reloadedStoryData.imageURL,
       });
     } catch (error) {
       console.error('Error updating story:', error);
     }
+  };
+
+  const handleImageUpload = async (event) => {
+    const file = event.target.files[0];
+    setNewImage(file);
+  
+    // Create a reference for the new image in Firebase Storage
+    const storageRef = ref(storage, `story_images/${id}/${file.name}`);
+    
+    // Upload the new image to Firebase Storage
+    const uploadTask = uploadBytes(storageRef, file);
+  
+    try {
+      // Wait for the upload to complete
+      await uploadTask;
+  
+      // Get the download URL of the uploaded image
+      const imageURL = await getDownloadURL(storageRef);
+  
+      // Update the editedStory data and also the BookCover src
+      setEditedStory({ ...editedStory, imageURL });
+    } catch (error) {
+      console.error('Error uploading image:', error);
+    }
+  };
+
+  const handleImageClick = () => {
+    fileInputRef.current.click();
   };
 
   const handleCancelStoryClick = () => {
@@ -198,6 +254,7 @@ function StoryDetails() {
       title: story.title,
       description: story.description,
       genre: story.genre,
+      imageURL: story.imageURL,
     });
   };
 
@@ -216,9 +273,9 @@ function StoryDetails() {
     }
   };
 
-  if (!story) {
-    return <div>Loading...</div>;
-  }
+  // if (!story) {
+  //   return <div>Loading...</div>;
+  // }
 
   return (
     <div>
@@ -226,7 +283,22 @@ function StoryDetails() {
           <FormContainer>
           <BookCoverContainer className="book-cover">
           <Aside>
-            <BookCover src={imageURL} alt="Story Cover" /> 
+          <label htmlFor="imageUpload">
+    <BookCover
+      src={editedStory.imageURL || story.imageURL}
+      alt="Story Cover"
+      onClick={handleImageClick}
+    />
+  </label>
+  {/* Hidden file input */}
+  <input
+    type="file"
+    accept="image/*"
+    onChange={handleImageUpload}
+    ref={fileInputRef}
+    id="imageUpload"
+    style={{ display: 'none' }} // Hide the input element
+  />
           </Aside>
           </BookCoverContainer>
           <FormSection>
@@ -259,7 +331,7 @@ function StoryDetails() {
         <div>
         <BookCoverContainer className="book-cover">
           <Aside>
-            <BookCover src="crystaltexture.webp" alt="Upload Book Cover" />
+            <BookCover src={story.imageURL} alt="Upload Book Cover" />
           </Aside>
         </BookCoverContainer>
         <FormContainer>
