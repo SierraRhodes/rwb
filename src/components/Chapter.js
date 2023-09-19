@@ -72,6 +72,15 @@ const FormButtonContainer = styled.div`
 padding: 20px;
 `;
 
+const SeparatorLine = styled.hr`
+  width: 60%;
+  border: 2px solid #ddd; /* Add a 1px solid gray border as the separator */
+  margin: 5px 0; /* Add some vertical spacing around the separator */
+`;
+
+
+
+
 
 
 function Chapter() {
@@ -126,7 +135,7 @@ function Chapter() {
           placeholder="Chapter Title"
           required
         />
-
+       <SeparatorLine/>
         <StyledQuillEditor
           value={chapterContent}
           onChange={handleContentChange}

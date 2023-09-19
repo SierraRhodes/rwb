@@ -219,6 +219,7 @@ function ChapterDetail() {
             value={editedChapter.title}
             onChange={(e) => setEditedChapter({ ...editedChapter, title: e.target.value })}
           />
+          <SeparatorLine/>
           <StyledQuillEditor
             value={editedChapter.content}
             onChange={(value) => setEditedChapter({ ...editedChapter, content: value })}
