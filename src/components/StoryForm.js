@@ -1,9 +1,11 @@
 //A form for creating or updating stories. It may contain fields like title, content, and privacy settings.
 import React, { useState } from 'react';
-import { db, auth } from '../firebase'; 
+import { db, auth, storage } from '../firebase'; 
 import { collection, addDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components'; 
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+
 
 // Create a styled component for the form container
 const FormContainer = styled.div`
@@ -112,30 +114,66 @@ function StoryForm() {
   const [successMessage, setSuccessMessage] = useState(null);
   const [image, setImage] = useState(null); // Add state for the selected image
   const navigate = useNavigate();
+  
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+  
     const user = auth.currentUser;
-    const newStory = {
-      title,
-      description,
-      genre,
-      tags: tags.split(',').map((tag) => tag.trim()),
-      userId: user.uid,
-      // You can add the image URL to the newStory object if needed
-    };
-
+  
     try {
-      const docRef = await addDoc(collection(db, 'stories'), newStory);
-      console.log('Document written with ID: ', docRef.id);
-      setSuccessMessage(`Story created successfully!`);
-      navigate('/story-list');
+      if (image) {
+        // Convert the data URL to a binary blob
+        const reader = new FileReader();
+        reader.onload = async (event) => {
+          const dataURL = event.target.result;
+          const blob = dataURItoBlob(dataURL);
+  
+          // Upload the binary blob to Firebase Storage
+          const storageRef = ref(storage, `book_covers/${image.name}`);
+          await uploadBytes(storageRef, blob);
+  
+          // Get the download URL for the uploaded image
+          const imageUrl = await getDownloadURL(storageRef);
+          console.log('image', imageUrl);
+  
+          const newStory = {
+            title,
+            description,
+            genre,
+            tags: tags.split(',').map((tag) => tag.trim()),
+            userId: user.uid,
+            imageURL: imageUrl, // Store the imageURL in Firestore
+          };
+  
+          // Add the newStory to Firestore
+          const docRef = await addDoc(collection(db, 'stories'), newStory);
+          console.log('Document written with ID: ', docRef.id);
+          setSuccessMessage(`Story created successfully!`);
+          navigate('/story-list');
+        };
+  
+        reader.readAsDataURL(image);
+      } else {
+        console.error('Please select an image for the story.');
+      }
     } catch (error) {
       console.error('Error creating story:', error);
-      // Display error message to the user
     }
   };
+  
+  // Function to convert data URL to blob
+  function dataURItoBlob(dataURI) {
+    const byteString = atob(dataURI.split(',')[1]);
+    const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+    const ab = new ArrayBuffer(byteString.length);
+    const ia = new Uint8Array(ab);
+    for (let i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+    }
+    return new Blob([ab], { type: mimeString });
+  }
+  
 
   const handleImageChange = (event) => {
     const selectedImage = event.target.files[0];

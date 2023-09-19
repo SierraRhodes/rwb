@@ -46,6 +46,7 @@ const fetchStories = async () => {
         fetchedChapters.push({
           id: chapterDoc.id,
           title: chapterData.title,
+          imageURL: storyData.imageURL,
           // Add other chapter properties as needed
         });
       });
@@ -54,8 +55,8 @@ const fetchStories = async () => {
         id: storyId,
         title: storyData.title,
         userId: storyData.userId,
-        chapters: fetchedChapters, // Add the chapters to the story
-        // Add other story properties as needed
+        chapters: fetchedChapters,
+        imageURL: storyData.imageURL, 
       });
     }
 

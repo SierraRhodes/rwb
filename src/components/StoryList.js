@@ -23,6 +23,11 @@ const Title = styled.h2`
   font-family: Arial, sans-serif;
 `;
 
+const StoryImage = styled.img`
+  width: 200px; /* Set the width to 100px */
+  height: 300px; /* Set the height to 200px */
+`;
+
 function StoryList({ stories, user }) {
   const navigate = useNavigate();
 
@@ -33,7 +38,7 @@ function StoryList({ stories, user }) {
 
   const handleStoryClick = (storyId) => {
     // Programmatically navigate to the story detail page
-    navigate(`/story-detail/${storyId}`);
+    navigate(`/story-detail/${storyId}?imageURL=${encodeURIComponent(storyId.imageURL)}`);
   };
 
   return (
@@ -42,6 +47,7 @@ function StoryList({ stories, user }) {
       <StoryListContainer>
         {userStories.map((story) => (
           <StoryItem key={story.id} onClick={() => handleStoryClick(story.id)}>
+            <StoryImage src={story.imageURL} alt="Story Cover" />
             <h3>{story.title}</h3>
             <p>Chapters: {story.chapters ? story.chapters.length : 0}</p>
           </StoryItem>

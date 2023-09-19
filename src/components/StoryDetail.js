@@ -117,6 +117,7 @@ const ButtonContainer = styled.div`
 
 function StoryDetails() {
   const { id } = useParams();
+  const imageURL = new URLSearchParams(window.location.search).get('imageURL');
   const [story, setStory] = useState(null);
   const [chapters, setChapters] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
@@ -136,6 +137,7 @@ function StoryDetails() {
             title: storyData.title,
             description: storyData.description,
             genre: storyData.genre,
+            imageURL: storyData.imageURL,
           });
 
           const chaptersRef = collection(storyDocRef, 'chapters');
@@ -224,7 +226,7 @@ function StoryDetails() {
           <FormContainer>
           <BookCoverContainer className="book-cover">
           <Aside>
-            <BookCover src="crystaltexture.webp" alt="Upload Book Cover" /> {/* Replace with the actual image path */}
+            <BookCover src={imageURL} alt="Story Cover" /> 
           </Aside>
           </BookCoverContainer>
           <FormSection>
