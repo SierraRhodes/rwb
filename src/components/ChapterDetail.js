@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { doc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore';
-import { db } from '../firebase';
+import { db, auth } from '../firebase';
 import { useNavigate } from 'react-router-dom';
 import DOMPurify from 'dompurify';
 import ReactQuill from 'react-quill';
@@ -118,6 +118,7 @@ function ChapterDetail() {
   const [chapter, setChapter] = useState(null);
   const [isEditing, setIsEditing] = useState(false); // Track editing state
   const [editedChapter, setEditedChapter] = useState({}); // Store edited chapter data
+  const [isOwner, setIsOwner] = useState(false); 
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -141,6 +142,15 @@ function ChapterDetail() {
             title: chapterData.title,
             content: chapterData.content,
           });
+
+          // Check if the current user is the owner
+          const storyDoc = await getDoc(storyDocRef);
+          if (storyDoc.exists()) {
+            const storyData = storyDoc.data();
+            if (auth.currentUser && auth.currentUser.uid === storyData.userId) {
+              setIsOwner(true);
+            }
+          }
         } else {
           console.error('Chapter not found.');
         }
@@ -241,7 +251,9 @@ function ChapterDetail() {
             readOnly={true} // Prevent editing when not in editing mode
             value={chapter.content}
           />
+          {isOwner && (
           <FormButton onClick={handleEditClick}>Edit</FormButton>
+          )}
         </FormContainer>
       )}
     </div>

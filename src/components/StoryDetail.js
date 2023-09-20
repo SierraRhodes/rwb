@@ -4,7 +4,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { doc, getDoc, collection, getDocs, updateDoc, deleteDoc } from 'firebase/firestore';
-import { db , storage } from '../firebase';
+import { db, auth, storage } from '../firebase';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
@@ -124,7 +124,9 @@ function StoryDetails() {
   const [editedStory, setEditedStory] = useState({});
   const [newImage, setNewImage] = useState(null);
   const fileInputRef = useRef(null);
+  const [isOwner, setIsOwner] = useState(false); 
   const navigate = useNavigate();
+
 
   useEffect(() => {
     const fetchStory = async () => {
@@ -132,7 +134,7 @@ function StoryDetails() {
         // Fetch story data from Firebase
         const storyDocRef = doc(db, 'stories', id);
         const storyDoc = await getDoc(storyDocRef);
-
+  
         if (storyDoc.exists()) {
           const storyData = storyDoc.data();
           setStory({
@@ -142,7 +144,12 @@ function StoryDetails() {
             genre: storyData.genre,
             imageURL: storyData.imageURL,
           });
-
+  
+          // Check if the current user is the owner
+          if (auth.currentUser && auth.currentUser.uid === storyData.userId) {
+            setIsOwner(true);
+          }
+  
           // Fetch chapter data related to the story
           const chaptersRef = collection(storyDocRef, 'chapters');
           const chapterQuerySnapshot = await getDocs(chaptersRef);
@@ -161,14 +168,17 @@ function StoryDetails() {
         console.error('Error fetching story:', error);
       }
     };
-
+  
     fetchStory();
   }, [id]);
+
 
   if (!story) {
     return <div>Loading...</div>;
   }
   console.log(story.imageURL);
+
+  
 
   const handleEditStoryClick = () => {
     setIsEditing(true);
@@ -360,10 +370,18 @@ function StoryDetails() {
           )}
           </FormSection>
           <ButtonContainer>
-            <FormButton onClick={handleEditStoryClick}>Edit Story</FormButton>
+          {isOwner && (
+            <FormButton onClick={handleEditStoryClick}>Edit</FormButton>
+          )}
+           {isOwner && (
             <FormButton onClick={handleDeleteStoryClick}>Delete Story</FormButton>
+           )}
+           {isOwner && (
             <FormButton onClick={() => navigate(`/chapter?storyId=${story.id}`)}>Add Chapter</FormButton>
+           )}
+           {isOwner && (
             <FormButton onClick={() => navigate('/story-list')}>Back to Story List</FormButton>
+            )}
           </ButtonContainer>
           </FormContainer>  
           </div>  
