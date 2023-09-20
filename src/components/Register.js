@@ -106,11 +106,11 @@ function Register() {
   return (
     <React.Fragment>
       <FormContainer>
-      {signUpSuccess}
       <form onSubmit={doSignUp}>
         <FormSection>
           <div>
         <h3>Become a Gem!</h3>
+        {signUpSuccess}
         </div>
         <FormInput
           type="text"

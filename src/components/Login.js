@@ -76,8 +76,8 @@ function Login() {
   return (
     <React.Fragment>
       <FormContainer>
-    {signInSuccess}
     <FormSection>
+    {signInSuccess}
       <div>
         <h3>Log in</h3>
       </div>
