@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { db } from '../firebase';
 import { useNavigate } from 'react-router-dom';
@@ -13,29 +12,32 @@ const StoryListContainer = styled.div`
 `;
 
 const StoryItem = styled.div`
-  width: calc(25% - 20px); /* 25% width for each story item with 20px gap */
+  width: calc(17% - 20px); 
   padding: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1), 0 0 20px rgba(255, 255, 255, 0.1);
   border-radius: 5px;
   cursor: pointer;
+  
 `;
 
 const Title = styled.h2`
-  text-align: center; /* Center the text horizontally */
-  margin: 20px 0; /* Center the text vertically with some top and bottom margin */
+  text-align: center;
+  margin: 20px 0;
   font-family: Arial, sans-serif;
 `;
 
+const StoryImage = styled.img`
+  width: 200px;
+  height: 300px;
+`;
 
-
-function SearchResults( ) {
+function SearchResults() {
   const navigate = useNavigate();
-  const { q } = useParams(); // Get the search query from the URL parameter
+  const { q } = useParams();
   console.log('Search query:', q);
   const [searchResults, setSearchResults] = useState([]);
 
   const handleStoryClick = (resultId) => {
-    // Programmatically navigate to the story detail page
     navigate(`/story-detail/${resultId}`);
   };
 
@@ -43,18 +45,26 @@ function SearchResults( ) {
     const fetchSearchResults = async () => {
       try {
         if (q) {
-          const storiesRef = collection(db, 'stories',); // Replace with your Firestore collection name
-
-          // Create a query based on the search query
+          const storiesRef = collection(db, 'stories');
           const qRef = query(storiesRef, where('title', '>=', q));
-
           const querySnapshot = await getDocs(qRef);
 
           const results = [];
-          querySnapshot.forEach((doc) => {
+          for (const doc of querySnapshot.docs) {
             const data = doc.data();
-            results.push(data);
-          });
+            const storyId = doc.id;
+            const chaptersRef = collection(db, 'stories', storyId, 'chapters');
+            const chaptersSnapshot = await getDocs(chaptersRef);
+            const chapters = chaptersSnapshot.docs.map((chapterDoc) => chapterDoc.data());
+            
+            results.push({
+              id: storyId,
+              title: data.title,
+              imageURL: data.imageURL,
+              genre: data.genre,
+              chapters: chapters,
+            });
+          }
 
           setSearchResults(results);
           console.log('results', results);
@@ -63,19 +73,24 @@ function SearchResults( ) {
         console.error('Error fetching search results:', error);
       }
     };
+  
 
     fetchSearchResults();
   }, [q]);
+  console.log('results', searchResults);
+
 
   return (
     <div>
       <Title>Search Results for "{q}"</Title>
       <StoryListContainer>
         {searchResults.map((result) => (
-           <StoryItem key={result.id} onClick={() => handleStoryClick(result.id)}>
-             <h3>{result.title}</h3>
-             <p>Chapters: {result.chapters ? result.chapters.length : 0}</p>
-         </StoryItem>
+          <StoryItem key={result.id} onClick={() => handleStoryClick(result.id)}>
+            <StoryImage src={result.imageURL} alt="Story Cover" />
+            <h3>{result.title}</h3>
+            <p>Genre: {result.genre}</p>
+            <p>Chapters: {result.chapters ? result.chapters.length : 0}</p>
+          </StoryItem>
         ))}
       </StoryListContainer>
     </div>

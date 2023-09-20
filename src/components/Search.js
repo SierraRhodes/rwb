@@ -8,21 +8,16 @@ const SearchContainer = styled.div`
   align-items: center;
   background: linear-gradient(
     45deg,
-    #ffcc00,
-    #ff99cc,
-    #cc99ff,
-    #99ccff,
-    #66ffcc
-  ); /* Apply a gradient background */
+    rgba(255, 204, 0, 0.9),   /* Adjust opacity (0.9) to make it paler */
+    rgba(255, 153, 204, 0.9), /* Adjust opacity (0.9) to make it paler */
+    rgba(204, 153, 255, 0.9), /* Adjust opacity (0.9) to make it paler */
+    rgba(153, 204, 255, 0.9), /* Adjust opacity (0.9) to make it paler */
+    rgba(102, 255, 204, 0.9)  /* Adjust opacity (0.9) to make it paler */
+  );
   padding: 5px;
   border-radius: 20px;
   width: 40%;
   margin-right: 10px;
-
-  .diamond-icon {
-    font-size: 20px; /* Adjust the size as needed */
-    margin-right: 4px; /* Adjust the spacing between the icon and text */
-  }
 `;
 
 const SearchInput = styled.input`

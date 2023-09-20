@@ -109,7 +109,7 @@ function Register() {
       <form onSubmit={doSignUp}>
         <FormSection>
           <div>
-        <h3>Become a Gem!</h3>
+        <h3>Become a Gem</h3>
         {signUpSuccess}
         </div>
         <FormInput
@@ -137,7 +137,7 @@ function Register() {
           required
         />
         <h6>Already have an account? Log in <Link to="/login">here</Link></h6>
-        <FormButton type="submit">Register!</FormButton>
+        <FormButton type="submit">Register</FormButton>
         </FormSection>
       </form>
       </FormContainer>
