@@ -87,13 +87,22 @@ const WordCountContainer = styled.div`
 `;
 
 const WordCountText = styled.p`
-  margin: 0;
-  flex: 1; /* Distribute available space evenly */
+  font-family: 'Roboto', sans-serif; /* Use a professional font family */
+  font-size: 18px; /* Larger font size for readability */
+  color: #333; /* Dark color for good contrast */
+  text-align: left; /* Align the text to the left */
 `;
 
-const WordCountGoalInput = styled.input`
-  width: 100px; /* Adjust the width as needed */
+const Input = styled.input`
+  width: 170px; /* Adjust the width as needed */
   padding: 5px;
+  text-align: center;
+`;
+
+const WordInput = styled.input`
+  width: 200px; /* Adjust the width as needed */
+  padding: 5px;
+  text-align: center;
 `;
 
 const TimerContainer = styled.div`
@@ -121,12 +130,123 @@ const LeftAlignedContainer = styled.div`
   width: 100%;
 `;
 
+const Icon = styled.img`
+  cursor: pointer;
+  margin-right: 16px; /* Add spacing between icon and text */
+  margin-left: 8px;
+  width: 40px;
+  height: 40px;
+`;
+
+const IconContainer = styled.div`
+  display: flex;
+  flex-direction: row; /* Arrange items horizontally */
+  width: 100%;
+
+  margin-right: 80px;
+`;
+
+const Button = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+
+  background-color: #007BFF; /* Default background color */
+  color: #fff; /* Default text color */
+
+  &:hover {
+    background-color: #0056b3; /* Hover background color */
+    transform: scale(1.05); /* Add a slight scale effect on hover */
+  }
+
+  &:active {
+    transform: scale(0.95); /* Add a scale effect when the button is clicked */
+  }
+
+  /* You can define additional styles for different button variants */
+  &.primary {
+    background-color: #007BFF;
+  }
+
+  &.secondary {
+    background-color: #28a745;
+  }
+
+  &.danger {
+    background-color: #dc3545;
+  }
+`;
+
+const CountdownTitle = styled.h3`
+  margin-left: 20px;
+`;
+
+const ProgressBar = styled.progress`
+  width: 100%;
+  appearance: none;
+  height: 5px;
+  border: none;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 5px;
+
+  &::-webkit-progress-bar {
+    background-color: #ddd; /* Background color for the progress bar container */
+    border-radius: 10px;
+  }
+
+  &::-webkit-progress-value {
+    background: linear-gradient(
+      to right,
+      rgba(255, 78, 80, 0.6),
+      rgba(252, 145, 58, 0.6),
+      rgba(249, 212, 35, 0.6),
+      rgba(168, 255, 120, 0.6),
+      rgba(120, 255, 214, 0.6),
+      rgba(120, 214, 255, 0.6),
+      rgba(168, 120, 255, 0.6),
+      rgba(249, 120, 212, 0.6),
+      rgba(255, 120, 168, 0.6),
+      rgba(255, 120, 99, 0.6)
+    ); /* Gradient of paler iridescent colors */
+    border-radius: 10px;
+  }
+  
+  &::-moz-progress-bar {
+    background: linear-gradient(
+      to right,
+      rgba(255, 78, 80, 0.6),
+      rgba(252, 145, 58, 0.6),
+      rgba(249, 212, 35, 0.6),
+      rgba(168, 255, 120, 0.6),
+      rgba(120, 255, 214, 0.6),
+      rgba(120, 214, 255, 0.6),
+      rgba(168, 120, 255, 0.6),
+      rgba(249, 120, 212, 0.6),
+      rgba(255, 120, 168, 0.6),
+      rgba(255, 120, 99, 0.6)
+    ); /* Gradient of paler iridescent colors */
+    border-radius: 10px;
+  }
+`;
 
 
 
 
 
 function Chapter() {
+  const [wordVisible, setWordVisible] = useState(false);
+  const [timerVisible, setTimerVisible] = useState(false);
+  const [countdownVisible, setCountdownVisible] = useState(false);
+
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const storyId = queryParams.get('storyId');
@@ -147,6 +267,18 @@ function Chapter() {
   const [isCountdownActive, setIsCountdownActive] = useState(false);
   const [countdown, setCountdown] = useState(60); // Set your initial countdown time in seconds
   const [countdownInput, setCountdownInput] = useState('00:01:00'); // Initial countdown input in "HH:MM:SS" format
+
+  const toggleWordVisibility = () => {
+    setWordVisible(!wordVisible);
+  };
+
+  const toggleTimerVisibility = () => {
+    setTimerVisible(!timerVisible);
+  };
+
+  const toggleCountdownVisibility = () => {
+    setCountdownVisible(!countdownVisible);
+  };
 
   // Function to parse the countdown input and update the countdown state
   const updateCountdownFromInput = () => {
@@ -291,44 +423,56 @@ function Chapter() {
       <FormContainer>
         <LeftAlignedContainer>
         <WordCountContainer>
-          <p>{wordCount} words</p>
-            <p>Word Count Goal: {wordCountGoal} words</p>
-            <input
-             type="number"
-             value={wordCountGoal}
-             onChange={handleWordCountGoalChange}
-             placeholder="Word Count Goal"
-             required
-          />
+        {wordVisible && (
+    <div>
+      <WordCountText>{wordCount} words</WordCountText>
+      <WordCountText>Word Count Goal: {wordCountGoal}</WordCountText>
+      <WordInput
+        type="number"
+        value={wordCountGoal}
+        onChange={handleWordCountGoalChange}
+        placeholder="Word Count Goal"
+        required
+      />
+    </div>
+  )}
+          
         </WordCountContainer>
         <TimerContainer>
-        <p>Timer: {formatTime(timer)}</p>
-            <button
-              type="button"
-              onClick={toggleTimer}
-            >
-              {isActive ? "Stop Timer" : "Start Timer"}
-            </button>
+        {timerVisible && (
+        <div>
+          <h3>{formatTime(timer)}</h3>
+          <Button
+          type="button"
+          onClick={toggleTimer}
+          >
+          {isActive ? "Stop Timer" : "Start Timer"}
+          </Button>
+        </div>
+        )}
           </TimerContainer>
           <CountdownContainer>
-          <p>
-            Countdown:
-            {isCountdownActive
-              ? formatTime(countdown)
-              : countdownInput}
-          </p>
-          <input
-            type="text"
-            value={countdownInput}
-            onChange={(e) => setCountdownInput(e.target.value)}
-            placeholder="HH:MM:SS"
-          />
-          <button
-            type="button"
-            onClick={toggleCountdown}
-          >
-            {isCountdownActive ? "Stop Countdown" : "Start Countdown"}
-          </button>
+          {countdownVisible && (
+    <div>
+      <CountdownTitle>
+        {isCountdownActive
+          ? formatTime(countdown)
+          : countdownInput}
+      </CountdownTitle>
+      <Input
+        type="text"
+        value={countdownInput}
+        onChange={(e) => setCountdownInput(e.target.value)}
+        placeholder="HH:MM:SS"
+      />
+      <Button
+        type="button"
+        onClick={toggleCountdown}
+      >
+        {isCountdownActive ? "Stop Countdown" : "Start Countdown"}
+      </Button>
+    </div>
+  )}
           </CountdownContainer>
         </LeftAlignedContainer>
         
@@ -340,16 +484,17 @@ function Chapter() {
           required
         />
         <SeparatorLine>
-        <progress
-          value={progressPercentage}
-          max="100"
-          style={{ width: '100%' }} 
-        >
-          {progressPercentage}% Complete
-        </progress>
+        <ProgressBar
+        value={progressPercentage}
+        max="100"
+      />
             </SeparatorLine>
        <aside>
-          <h1>Tool icons will go here</h1>
+        <IconContainer>
+          <Icon src="logo512.png" alt="Word" onClick={toggleWordVisibility} />
+          <Icon src="logo512.png" alt="Timer" onClick={toggleTimerVisibility} />
+          <Icon src="logo512.png" alt="Countdown" onClick={toggleCountdownVisibility} />
+          </IconContainer>
         </aside>
         <StyledQuillEditor
           value={chapterContent}
