@@ -129,7 +129,7 @@ const CountdownContainer = styled.div`
   justify-content: center; /* Center items horizontally */
   align-items: center; /* Center items vertically */
   padding: 10px;
-  margin-left: 1100px;
+  margin-left: 1150px;
   `;
 
 const LeftAlignedContainer = styled.div`
@@ -152,7 +152,7 @@ const IconContainer = styled.div`
   flex-direction: row; /* Arrange items horizontally */
   width: 100%;
 
-  margin-right: 80px;
+  margin-right: 100px;
 `;
 
 const Button = styled.button`
