@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import DeleteConfirmation from './DeleteConfirmation';
 
 const FormContainer3 = styled.div`
   display: flex;
@@ -28,14 +29,6 @@ const FormSection2 = styled.div`
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1), 0 0 20px rgba(255, 255, 255, 0.1);
 `;
 
-// Style the form labels
-const FormLabel2 = styled.label`
-  display: block;
-  margin-bottom: 10px;
-  font-size: 15px;
-  font-weight: bold;
-`;
-
 // Style the form inputs and textarea
 const FormInput2 = styled.input`
   width: 90%;
@@ -45,19 +38,6 @@ const FormInput2 = styled.input`
   border-radius: 5px;
   background-color: transparent;
   color: #333;
-`;
-
-const FormTextarea2 = styled.textarea`
-  width: 90%;
-  height: 200px;
-  padding: 10px;
-  margin-bottom: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: transparent;
-  color: #333;
-  resize: none;
-  overflow-y: auto;
 `;
 
 // Style the button
@@ -277,6 +257,7 @@ function StoryDetails() {
   const [newImage, setNewImage] = useState(null);
   const fileInputRef = useRef(null);
   const [isOwner, setIsOwner] = useState(false); 
+  const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
   const navigate = useNavigate();
   const [user] = useAuthState(auth);
   
@@ -451,20 +432,30 @@ function StoryDetails() {
     });
   };
 
-  const handleDeleteStoryClick = async () => {
-    const confirmDelete = window.confirm('Are you sure you want to delete this story?');
-
-    if (confirmDelete) {
-      try {
-        const storyDocRef = doc(db, 'stories', id);
-        await deleteDoc(storyDocRef);
-        // Redirect or perform any other actions after deleting
-        navigate('/story-list');
-      } catch (error) {
-        console.error('Error deleting story:', error);
-      }
+  const handleDeleteStoryClick = () => {
+    // Open the custom confirmation dialog
+    setIsConfirmDialogOpen(true);
+  };
+  
+  const handleConfirmDelete = async () => {
+    // Close the custom confirmation dialog
+    setIsConfirmDialogOpen(false);
+  
+    try {
+      const storyDocRef = doc(db, 'stories', id);
+      await deleteDoc(storyDocRef);
+      // Redirect or perform any other actions after deleting
+      navigate('/story-list');
+    } catch (error) {
+      console.error('Error deleting story:', error);
     }
   };
+
+  const handleCancelDelete = () => {
+    setIsConfirmDialogOpen(false);
+  };
+
+
 
   return (
     <div>
@@ -592,7 +583,13 @@ function StoryDetails() {
   
           </div>  
       )}
+      <DeleteConfirmation
+      isOpen={isConfirmDialogOpen}
+      onCancel={handleCancelDelete}
+      onConfirm={handleConfirmDelete}
+    />
     </div>
+    
   );
 }
 

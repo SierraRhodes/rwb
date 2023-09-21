@@ -8,6 +8,9 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import styled from 'styled-components';
 import Comments from './Comments';
+import DeleteConfirmation from './DeleteConfirmation';
+
+
 
 const FormContainer = styled.div`
   display: flex;
@@ -120,6 +123,7 @@ function ChapterDetail() {
   const [isEditing, setIsEditing] = useState(false); // Track editing state
   const [editedChapter, setEditedChapter] = useState({}); // Store edited chapter data
   const [isOwner, setIsOwner] = useState(false); 
+  const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -201,21 +205,47 @@ function ChapterDetail() {
     setIsEditing(false);
   };
 
-  const handleDeleteClick = async () => {
-    const confirmDelete = window.confirm('Are you sure you want to delete this chapter?');
+  // const handleDeleteClick = async () => {
+  //   const confirmDelete = window.confirm('Are you sure you want to delete this chapter?');
 
-    if (confirmDelete) {
-      try {
-        const chapterDocRef = doc(db, 'stories', storyId, 'chapters', chapterId);
-        await deleteDoc(chapterDocRef);
+  //   if (confirmDelete) {
+  //     try {
+  //       const chapterDocRef = doc(db, 'stories', storyId, 'chapters', chapterId);
+  //       await deleteDoc(chapterDocRef);
 
-        // Redirect or perform any other actions after deleting
-        navigate(`/story-detail/${storyId}`);
-      } catch (error) {
-        console.error('Error deleting chapter:', error);
-      }
+  //       // Redirect or perform any other actions after deleting
+  //       navigate(`/story-detail/${storyId}`);
+  //     } catch (error) {
+  //       console.error('Error deleting chapter:', error);
+  //     }
+  //   }
+  // };
+
+  const handleDeleteClick = () => {
+    // Open the custom confirmation dialog
+    setIsConfirmDialogOpen(true);
+  };
+  
+  const handleConfirmDelete = async () => {
+    setIsConfirmDialogOpen(false);
+  
+    try {
+      const chapterDocRef = doc(db, 'stories', storyId, 'chapters', chapterId);
+      await deleteDoc(chapterDocRef);
+  
+      // Redirect or perform any other actions after deleting
+      navigate(`/story-detail/${storyId}`);
+    } catch (error) {
+      console.error('Error deleting chapter:', error);
     }
   };
+
+  const handleCancelDelete = () => {
+    setIsConfirmDialogOpen(false);
+  };
+
+
+
 
   if (!chapter) {
     return <div>Loading...</div>;
@@ -252,14 +282,24 @@ function ChapterDetail() {
             readOnly={true} // Prevent editing when not in editing mode
             value={chapter.content}
           />
+          <FormButtonContainer>
           {isOwner && (
-          <FormButton onClick={handleEditClick}>Edit</FormButton>
+          <FormButton onClick={handleEditClick}>Edit Chapter</FormButton>
           )}
+          {isOwner && (
+          <FormButton onClick={handleDeleteClick}>Delete Chapter</FormButton>
+          )}
+          </FormButtonContainer>
         </FormContainer>
       )}
       <div>
         <Comments />
       </div>
+      <DeleteConfirmation
+      isOpen={isConfirmDialogOpen}
+      onCancel={handleCancelDelete}
+      onConfirm={handleConfirmDelete}
+    />
     </div>
   );
 }
