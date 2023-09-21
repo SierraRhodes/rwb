@@ -5,7 +5,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { doc, getDoc, collection, getDocs, updateDoc, deleteDoc, setDoc } from 'firebase/firestore';
 import { db, auth, storage } from '../firebase';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -24,6 +24,45 @@ const FormContainer = styled.div`
   margin-left: 172px;
   
   //background: black;
+`;
+
+const FormContainer2 = styled.div`
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  padding: 20px; /* Add padding around the entire form container */
+  //border: 2px black solid;
+  width: 970px;
+  margin-left: 172px;
+  
+  //background: black;
+`;
+
+const ChapterContainer = styled.div`
+  display: flex;
+  flex-direction: column; /* Display items in a column */
+  padding: 10px;
+  //border: 2px black solid;
+  width: 970px;
+  margin-left: 162 px;
+  // background: black;
+  margin-bottom: 5px;
+`;
+
+const ChapterItem = styled.div`
+  width: 93%;
+  margin-bottom: 10px;
+  padding: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 0px;
+  margin-right: 100px; /* Adjust the left margin as needed */
+ 
+`;
+
+const ChapterContentTitle = styled.div`
+  margin-bottom: 90px;
+
 `;
 
 // Create a styled component for the book cover image (aside)
@@ -430,28 +469,34 @@ function StoryDetails() {
         </BookCoverContainer>
         <FormContainer>
           <FormSection>
-          <h5>Title</h5>
+           <h5>Title</h5>
           {story.title && <p>{story.title}</p>}
           <h5>Description</h5>
           {story.description && <p>{story.description}</p>}
           <h5>Genre</h5>
           {story.genre && <p>{story.genre}</p>}
-
-          <h5>Chapters</h5>
+          </FormSection>
+          </FormContainer>
+          <FormContainer2>
           {chapters.length > 0 ? (
-            <ol>
-              {chapters.map((chapter) => (
-                <li key={chapter.id}>
+            <ChapterContainer>
+               <h4>Table of Contents</h4>
+               {chapters
+              .slice() // Create a shallow copy of the array
+              .sort((a, b) => chapters.indexOf(a) - chapters.indexOf(b)) // Sort based on index
+              .map((chapter) => (
+                 <ChapterItem key={chapter.id} onClick={() => navigate(`/chapter-detail/${story.id}/${chapter.id}`)}>
                   <h4>
-                    <Link to={`/chapter-detail/${story.id}/${chapter.id}`}>{chapter.title}</Link>
+                    {chapter.title}
                   </h4>
-                </li>
+                </ChapterItem>
               ))}
-            </ol>
+            </ChapterContainer>
           ) : (
             <><p>No chapters available for this story.</p></>
           )}
-          </FormSection>
+          </FormContainer2>
+        
           {/* <ButtonContainer>
           {isOwner && (
             <FormButton onClick={handleEditStoryClick}>Edit Story</FormButton>
@@ -467,7 +512,7 @@ function StoryDetails() {
             )}
            
           </ButtonContainer> */}
-          </FormContainer>  
+  
           </div>  
       )}
     </div>
