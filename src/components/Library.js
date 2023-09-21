@@ -1,119 +1,132 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import {useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { db, auth } from '../firebase';
-import { collection, getDocs, doc, getDoc } from 'firebase/firestore'; // Import doc and getDoc
+import { collection, getDocs, doc, getDoc } from 'firebase/firestore';
 
-const LibraryContainer = styled.div`
-  width: ${props => (props.expanded ? '300px' : '50px')};
-  height: 84.5%;
-  background-color: #333;
-  transition: width 0.3s;
-  overflow: hidden;
-  position: absolute;
-  right: 0;
+const StoryListContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+`;
+
+const StoryItem = styled.div`
+  width: calc(17% - 20px); 
+  padding: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1), 0 0 20px rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 10px;
+`;
+
+const Title = styled.h2`
+  text-align: center;
+  margin: 20px 0;
+  font-family: Arial, sans-serif;
+`;
+
+const StoryImage = styled.img`
+  width: 200px;
+  height: 300px;
 `;
 
 function Library() {
   const [userStories, setUserStories] = useState([]);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchUserLibrary = async () => {
-      // Check if the user is authenticated
-      if (!auth.currentUser) {
-        console.log('Login!');
-        return;
-      }
+  const handleStoryClick = (resultId) => {
+    navigate(`/story-detail/${resultId}`);
+  };
 
-      const libraryQuery = collection(db, 'users', auth.currentUser.uid, 'library');
+  function truncateDescription(description, maxLength) {
+    if (description.length <= maxLength) {
+      return description;
+    }
+    return description.substr(0, maxLength) + '...';
+  }
+  
+
+  useEffect(() => {
+    // Fetching user's library with chapters
+// Fetching user's library with chapters
+const fetchUserLibrary = async () => {
+  if (!auth.currentUser) {
+    console.log('Login!');
+    return;
+  }
+
+  const libraryQuery = collection(db, 'users', auth.currentUser.uid, 'library');
+
+  try {
+    const querySnapshot = await getDocs(libraryQuery);
+    const userLibraryData = [];
+
+    for (const docRef of querySnapshot.docs) {
+      const storyId = docRef.id;
+      const storyRef = doc(db, 'stories', storyId);
 
       try {
-        const querySnapshot = await getDocs(libraryQuery);
-        const userLibraryData = [];
+        const storySnapshot = await getDoc(storyRef);
 
-        for (const docRef of querySnapshot.docs) {
-          const storyId = docRef.id; // Use the library document ID as the storyId
+        if (storySnapshot.exists()) {
+          const storyData = storySnapshot.data();
 
-          // Reference to the story document in the "stories" collection
-          const storyRef = doc(db, 'stories', storyId);
-          const storySnapshot = await getDoc(storyRef);
+          // Fetch chapters for the specific story
+          const chaptersQuery = collection(storyRef, 'chapters');
+          const chaptersSnapshot = await getDocs(chaptersQuery);
+          const chapters = chaptersSnapshot.docs.map((chapterDoc) => chapterDoc.data());
+          
+          console.log(chaptersQuery);
+          console.log('chapters', chaptersSnapshot);
 
-          console.log(storyId);
-
-          if (storySnapshot.exists()) {
-            const storyData = storySnapshot.data();
-            userLibraryData.push({
-              id: storyId,
-              title: storyData.title, // Get the story title
-              // Include other story details as needed
-              // For example, if you have "userId," "chapters," "imageURL," add them here
-            });
-          } else {
-            // Handle the case where no matching story was found
-            console.log('No matching story found for library document:', storyId);
-          }
+          userLibraryData.push({
+            id: storyId,
+            title: storyData.title,
+            genre: storyData.genre,
+            imageURL: storyData.imageURL,
+            description: storyData.description,
+            chapters: chapters,
+          });
+        } else {
+          console.log('No matching story found for library document:', storyId);
         }
-
-        setUserStories(userLibraryData);
-        console.log('stories', userLibraryData);
       } catch (error) {
-        console.error('Error fetching user library:', error);
+        console.error('Error fetching story data:', error);
       }
-    };
+    }
+
+    setUserStories(userLibraryData);
+    console.log('stories', userLibraryData);
+  } catch (error) {
+    console.error('Error fetching user library:', error);
+  }
+};
+
 
     fetchUserLibrary();
   }, []);
 
   return (
     <div>
-      <h2>Your Library</h2>
-      <ul>
+      <Title>Your Library</Title>
+      <StoryListContainer>
         {userStories.map((story) => (
-          <li key={story.id}>
-            <h3>{story.title}</h3>
-            {/* Display other story details */}
-          </li>
+          <StoryItem key={story.id} onClick={() => handleStoryClick(story.id)}>
+            <StoryImage src={story.imageURL} alt="Story Cover" />
+            <h4>{story.title}</h4>
+            <p>Chapters: {story.chapters ? story.chapters.length : 0}</p>
+            <p>{truncateDescription(story.description, 30)}</p>
+          </StoryItem>
         ))}
-      </ul>
+      </StoryListContainer>
     </div>
   );
 }
 
 export default Library;
 
-
-
-
-
-
-
-
-
-// const Library = () => {
-//   const [expanded, setExpanded] = useState(false);
-
-//   const toggleLibrary = () => {
-//     setExpanded(!expanded);
-//   };
-
-//   return (
-//     <AppContainer>
-//       <LibraryContainer expanded={expanded}>
-//         {expanded && (
-//           <div>
-//            <li>Book 1</li>
-//            <li>Book 2</li>
-//            <li>Book 3</li>
-//           </div>
-//         )}
-//         <ToggleButton onClick={toggleLibrary}>
-//           {expanded ? 'Collapse' : 'Library'}
-//         </ToggleButton>
-//       </LibraryContainer>
-//     </AppContainer>
-//   );
-// };
-
-//export default Library;
 

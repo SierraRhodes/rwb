@@ -27,7 +27,7 @@ const FormContainer = styled.div`
 const Aside = styled.aside`
   width: 300px;
   height: 500px;
-  margin-right: 20px;
+  margin-left: 120px;
   //border: 2px black solid;
   display: flex;
   align-items: center;
@@ -42,7 +42,7 @@ const BookCover = styled.img`
 `;
 
 const BookCoverContainer = styled.div`
-  margin-left: 50px;
+  margin-left: 60px;
   padding: 20px; /* Add padding to the book cover container */
   display: left;
 `;
@@ -105,8 +105,26 @@ const FormButton = styled.button`
   display: center;
   justify-content: center;
   align-items: center;
-  margin-right: 10px; /* Add margin to space out the buttons */
+  margin-right: 0px; /* Add margin to space out the buttons */
+  width: 200px;
+  &:hover {
+    background-color: #0056b3;
+  }
+`;
 
+const FormButton2 = styled.button`
+  background-color: #007BFF;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: center;
+  justify-content: center;
+  align-items: center;
+  margin-right: 0px; /* Add margin to space out the buttons */
+  width: 1550px;
   &:hover {
     background-color: #0056b3;
   }
@@ -115,8 +133,19 @@ const FormButton = styled.button`
 
 const ButtonContainer = styled.div`
   display: flex;
-  flex-direction: column; /* Stack items vertically */
+  flex-direction: row; /* Stack items vertically */
   gap: 10px; /* Add spacing between the buttons */
+  margin: 2px;
+
+`;
+
+const ButtonContainer2 = styled.div`
+  display: flex;
+  flex-direction: row; /* Stack items vertically */
+  gap: 10px; /* Add spacing between the buttons */
+  margin-left: 120px;
+  margin-bottom: 20px;
+
 `;
 
 
@@ -131,10 +160,6 @@ function StoryDetails() {
   const [isOwner, setIsOwner] = useState(false); 
   const navigate = useNavigate();
   const [user] = useAuthState(auth);
-
-
-
-
   
 
   useEffect(() => {
@@ -187,9 +212,6 @@ function StoryDetails() {
   }
   console.log(story.imageURL);
 
-
-
-
   const handleAddToLibraryClick = async () => {
     if (!user) {
       // User is not authenticated, handle accordingly (e.g., show a login prompt)
@@ -221,15 +243,6 @@ function StoryDetails() {
       console.error('Error adding story to library:', error);
     }
   };
-  
-
-  
-  
-  
-  
-  
-  
-
 
   const handleEditStoryClick = () => {
     setIsEditing(true);
@@ -386,10 +399,31 @@ function StoryDetails() {
         </FormContainer>
       ) : (
         <div>
+              <ButtonContainer>
+           <FormButton2 onClick={handleAddToLibraryClick}>Add to Library</FormButton2> 
+          </ButtonContainer>
         <BookCoverContainer className="book-cover">
+          <div>
+        <ButtonContainer2>
+          {isOwner && (
+            <FormButton onClick={handleEditStoryClick}>Edit Story</FormButton>
+          )}
+           {isOwner && (
+            <FormButton onClick={handleDeleteStoryClick}>Delete Story</FormButton>
+           )}
+           {isOwner && (
+            <FormButton onClick={() => navigate(`/chapter?storyId=${story.id}`)}>Add Chapter</FormButton>
+           )}
+           {isOwner && (
+            <FormButton onClick={() => navigate('/story-list')}>Back to Story List</FormButton>
+            )}
+           
+          </ButtonContainer2>
+          </div>
           <Aside>
             <BookCover src={story.imageURL} alt="Upload Book Cover" />
           </Aside>
+          
         </BookCoverContainer>
         <FormContainer>
           <FormSection>
@@ -413,12 +447,11 @@ function StoryDetails() {
             </ol>
           ) : (
             <><p>No chapters available for this story.</p></>
-          
           )}
           </FormSection>
-          <ButtonContainer>
+          {/* <ButtonContainer>
           {isOwner && (
-            <FormButton onClick={handleEditStoryClick}>Edit</FormButton>
+            <FormButton onClick={handleEditStoryClick}>Edit Story</FormButton>
           )}
            {isOwner && (
             <FormButton onClick={handleDeleteStoryClick}>Delete Story</FormButton>
@@ -429,9 +462,8 @@ function StoryDetails() {
            {isOwner && (
             <FormButton onClick={() => navigate('/story-list')}>Back to Story List</FormButton>
             )}
-           <FormButton onClick={handleAddToLibraryClick}>Add to Library</FormButton> 
            
-          </ButtonContainer>
+          </ButtonContainer> */}
           </FormContainer>  
           </div>  
       )}
