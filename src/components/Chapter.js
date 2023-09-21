@@ -73,6 +73,12 @@ const FormButtonContainer = styled.div`
 padding: 20px;
 `;
 
+// const ControlsContainer = styled.div`
+//   position: absolute;
+//   // top: 20px; // Adjust the top position as needed
+//   // right: 20px; // Adjust the right position as needed
+// `;
+
 const SeparatorLine = styled.div`
   width: 60%;
   //border: 2px solid #ddd; /* Add a 1px solid gray border as the separator */
@@ -80,6 +86,7 @@ const SeparatorLine = styled.div`
 `;
 
 const WordCountContainer = styled.div`
+  position: absolute;
   display: flex;
   flex-direction: column; /* Arrange items vertically */
   align-items: left;
@@ -106,21 +113,23 @@ const WordInput = styled.input`
 `;
 
 const TimerContainer = styled.div`
+  position: abolute;
   display: flex;
   flex-direction: column; /* Arrange items vertically */
   justify-content: center; /* Center items horizontally */
   align-items: center; /* Center items vertically */
   padding: 10px;
-  margin-left: 370px;
+  margin-left: 550px;
 `;
 
 const CountdownContainer = styled.div`
+  position: absolute;
   display: flex;
   flex-direction: column; /* Arrange items vertically */
   justify-content: center; /* Center items horizontally */
   align-items: center; /* Center items vertically */
   padding: 10px;
-  margin-left: 370px;
+  margin-left: 1100px;
   `;
 
 const LeftAlignedContainer = styled.div`
@@ -421,7 +430,7 @@ function Chapter() {
  
     <form className="chapter" onSubmit={handleSubmit}>
       <FormContainer>
-        <LeftAlignedContainer>
+        <LeftAlignedContainer> 
         <WordCountContainer>
         {wordVisible && (
     <div>
@@ -436,7 +445,7 @@ function Chapter() {
       />
     </div>
   )}
-          
+        
         </WordCountContainer>
         <TimerContainer>
         {timerVisible && (
