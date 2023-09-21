@@ -3,11 +3,14 @@
 
 import React, { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
-import { doc, getDoc, collection, getDocs, updateDoc, deleteDoc } from 'firebase/firestore';
+import { doc, getDoc, collection, getDocs, updateDoc, deleteDoc, setDoc } from 'firebase/firestore';
 import { db, auth, storage } from '../firebase';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { useAuthState } from 'react-firebase-hooks/auth';
+
+
 
 
 // Create a styled component for the form container
@@ -116,6 +119,7 @@ const ButtonContainer = styled.div`
   gap: 10px; /* Add spacing between the buttons */
 `;
 
+
 function StoryDetails() {
   const { id } = useParams();
   const [story, setStory] = useState(null);
@@ -126,7 +130,12 @@ function StoryDetails() {
   const fileInputRef = useRef(null);
   const [isOwner, setIsOwner] = useState(false); 
   const navigate = useNavigate();
+  const [user] = useAuthState(auth);
 
+
+
+
+  
 
   useEffect(() => {
     const fetchStory = async () => {
@@ -178,7 +187,49 @@ function StoryDetails() {
   }
   console.log(story.imageURL);
 
+
+
+
+  const handleAddToLibraryClick = async () => {
+    if (!user) {
+      // User is not authenticated, handle accordingly (e.g., show a login prompt)
+      return;
+    }
   
+    try {
+      // Get the user's UID
+      const userId = user.uid;
+  
+      // Reference to the user's library collection in Firestore
+      const userLibraryRef = collection(db, 'users', userId, 'library');
+  
+      // Check if the story is already in the user's library
+      const userLibrarySnapshot = await getDocs(userLibraryRef);
+  
+      if (!userLibrarySnapshot.docs.some((doc) => doc.id === story.id)) {
+        // Add the story to the user's library
+        await setDoc(doc(userLibraryRef, story.id), {});
+  
+        // Display a success message or update the UI as needed
+        console.log('Story added to library successfully!');
+      } else {
+        // The story is already in the library
+        console.log('Story is already in your library.');
+      }
+    } catch (error) {
+      // Handle any errors that occur during the process
+      console.error('Error adding story to library:', error);
+    }
+  };
+  
+
+  
+  
+  
+  
+  
+  
+
 
   const handleEditStoryClick = () => {
     setIsEditing(true);
@@ -283,10 +334,6 @@ function StoryDetails() {
     }
   };
 
-  // if (!story) {
-  //   return <div>Loading...</div>;
-  // }
-
   return (
     <div>
       {isEditing ? (
@@ -382,6 +429,8 @@ function StoryDetails() {
            {isOwner && (
             <FormButton onClick={() => navigate('/story-list')}>Back to Story List</FormButton>
             )}
+           <FormButton onClick={handleAddToLibraryClick}>Add to Library</FormButton> 
+           
           </ButtonContainer>
           </FormContainer>  
           </div>  

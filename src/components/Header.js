@@ -137,7 +137,7 @@ const Header = () => {
           <DropdownMenuItem onClick={() => navigateTo("/register")}>Create an Account</DropdownMenuItem>
           <DropdownMenuItem onClick={() => navigateTo("/login")}>Log In</DropdownMenuItem>
           <DropdownMenuItem onClick={() => navigateTo("/logout")}>Log Out</DropdownMenuItem>
-          <DropdownMenuItem onClick={() => navigateTo("/")}>Profile</DropdownMenuItem>
+          <DropdownMenuItem onClick={() => navigateTo("/library")}>Profile</DropdownMenuItem>
           <DropdownMenuItem onClick={() => navigateTo("/")}>Inbox</DropdownMenuItem>
         </DropdownMenu>
       </NavItems>
