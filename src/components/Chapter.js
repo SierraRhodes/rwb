@@ -17,7 +17,7 @@ const FormContainer = styled.div`
 
 const TitleInput = styled.input`
   margin-bottom: 20px; /* Add space between the title input and the editor */
-  font-size: 18px; /* Increase font size for the title input */
+  font-size: 24px; /* Increase font size for the title input */
   padding: 10px;
 
 
@@ -36,7 +36,7 @@ const StyledQuillEditor = styled(ReactQuill)`
 
   .ql-editor {
     font-family: Arial, sans-serif;
-    font-size: 16px;
+    font-size: 20px;
     line-height: 1.5;
     max-width: 100%;
     //padding: 20px;

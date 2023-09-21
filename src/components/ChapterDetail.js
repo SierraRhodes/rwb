@@ -7,6 +7,7 @@ import DOMPurify from 'dompurify';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import styled from 'styled-components';
+import Comments from './Comments';
 
 const FormContainer = styled.div`
   display: flex;
@@ -256,6 +257,9 @@ function ChapterDetail() {
           )}
         </FormContainer>
       )}
+      <div>
+        <Comments />
+      </div>
     </div>
   );
 }
