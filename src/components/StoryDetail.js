@@ -10,6 +10,83 @@ import styled from 'styled-components';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
+const FormContainer3 = styled.div`
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Align items to the top */
+  padding: 20px; /* Add padding around the entire form container */
+`;
+
+// Create a styled component for the form section containing title, description, genre, and tags
+const FormSection2 = styled.div`
+  flex: 1;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
+  justify-content: center;
+  margin-right: 40px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1), 0 0 20px rgba(255, 255, 255, 0.1);
+`;
+
+// Style the form labels
+const FormLabel2 = styled.label`
+  display: block;
+  margin-bottom: 10px;
+  font-size: 15px;
+  font-weight: bold;
+`;
+
+// Style the form inputs and textarea
+const FormInput2 = styled.input`
+  width: 90%;
+  padding: 5px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: transparent;
+  color: #333;
+`;
+
+const FormTextarea2 = styled.textarea`
+  width: 90%;
+  height: 200px;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: transparent;
+  color: #333;
+  resize: none;
+  overflow-y: auto;
+`;
+
+// Style the button
+const FormButton3 = styled.button`
+background-color: #007BFF;
+color: #fff;
+border: none;
+padding: 10px 20px;
+border-radius: 5px;
+cursor: pointer;
+transition: background-color 0.3s ease;
+display: center;
+justify-content: center;
+align-items: center;
+margin-right: 0px; /* Add margin to space out the buttons */
+width: 150px;
+margin-left: 50px;
+&:hover {
+  background-color: #0056b3;
+}
+`;
+
+const BookCoverContainer2 = styled.div`
+  margin-left: 50px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 
 
@@ -392,7 +469,7 @@ function StoryDetails() {
   return (
     <div>
       {isEditing ? (
-          <FormContainer>
+          <FormContainer3>
           <BookCoverContainer className="book-cover">
           <Aside>
           <label htmlFor="imageUpload">
@@ -413,9 +490,9 @@ function StoryDetails() {
   />
           </Aside>
           </BookCoverContainer>
-          <FormSection>
+          <FormSection2>
           <FormLabel htmlFor="title">Title</FormLabel>
-          <FormInput
+          <FormInput2
             type="text"
             value={editedStory.title}
             onChange={(e) => setEditedStory({ ...editedStory, title: e.target.value })}
@@ -427,18 +504,18 @@ function StoryDetails() {
             onChange={(e) => setEditedStory({ ...editedStory, description: e.target.value })}
           />
           <FormLabel htmlFor="title">Genre</FormLabel>
-          <FormInput
+          <FormInput2
             type="text"
             value={editedStory.genre}
             onChange={(e) => setEditedStory({ ...editedStory, genre: e.target.value })}
           />
           <div>
-          <FormButton onClick={handleSaveStoryClick}>Save</FormButton>
-          <FormButton onClick={handleDeleteStoryClick}>Delete</FormButton>
-          <FormButton onClick={handleCancelStoryClick}>Cancel</FormButton>
+          <FormButton3 onClick={handleSaveStoryClick}>Save</FormButton3>
+          <FormButton3 onClick={handleDeleteStoryClick}>Delete</FormButton3>
+          <FormButton3 onClick={handleCancelStoryClick}>Cancel</FormButton3>
           </div>
-          </FormSection>
-        </FormContainer>
+          </FormSection2>
+        </FormContainer3>
       ) : (
         <div>
               <ButtonContainer>
@@ -482,9 +559,9 @@ function StoryDetails() {
             <ChapterContainer>
                <h4>Table of Contents</h4>
                {chapters
-              .slice() // Create a shallow copy of the array
-              .sort((a, b) => chapters.indexOf(a) - chapters.indexOf(b)) // Sort based on index
-              .map((chapter) => (
+                .slice() // Create a shallow copy of the array
+                .sort((a, b) => chapters.indexOf(a) - chapters.indexOf(b)) // Sort based on index
+                .map((chapter) => (
                  <ChapterItem key={chapter.id} onClick={() => navigate(`/chapter-detail/${story.id}/${chapter.id}`)}>
                   <h4>
                     {chapter.title}
