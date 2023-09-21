@@ -13,7 +13,7 @@ List the absolute minimum features the project requires to meet this purpose or 
 X Full CRUD functionality when creating their own book 
 X Register Account 
 X Login/Logout 
-Search Functionality 
+X Search Functionality 
 
 What tools, frameworks, libraries, APIs, modules and/or other resources (whatever is
 specific to your track, and your language) will you use to create this MVP? List them
