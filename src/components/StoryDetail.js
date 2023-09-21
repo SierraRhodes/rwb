@@ -20,6 +20,9 @@ const FormContainer = styled.div`
   align-items: center; /* Align items to the top */
   padding: 20px; /* Add padding around the entire form container */
   //border: 2px black solid;
+  width: 970px;
+  margin-left: 172px;
+  
   //background: black;
 `;
 
