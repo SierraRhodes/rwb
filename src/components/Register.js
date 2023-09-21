@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { auth, db } from '../firebase.js'; // Import your Firestore instance
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import styled from 'styled-components'; 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const FormContainer = styled.div`
   display: flex;
@@ -60,13 +60,21 @@ const FormButton = styled.button`
 
 function Register() {
   const [signUpSuccess, setSignUpSuccess] = useState(null);
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+    confirmPassword: '',
+    username: '',
+  });
+
+  const navigate = useNavigate();
 
   async function doSignUp(event) {
     event.preventDefault();
-    const email = event.target.email.value;
-    const password = event.target.password.value;
-    const confirmPassword = event.target.confirmPassword.value;
-    const username = event.target.username.value;
+    const email = formData.email;
+    const password = formData.password;
+    const confirmPassword = formData.confirmPassword;
+    const username = formData.username;
 
     // Check if passwords match
     if (password !== confirmPassword) {
@@ -79,67 +87,80 @@ function Register() {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
       console.log("user", user);
-      // Check username availability in your "usernames" collection
-      // const usernameRef = db.collection('usernames').doc(username);
-      //const usernamesRef = collection(db, 'usernames').doc(username);
-      // const usernameDoc = await usernameRef.get();
-
-      // if (usernameDoc.exists) {
-      //   setSignUpSuccess('Username is already taken.');
-      //   return;
-      // }
-
-      // // Username is available, store it in the "usernames" collection
-      // await usernameRef.set({ uid: user.uid });
-      // console.log('Username added to "usernames" collection.');
 
       // Set the display name (username) for the user
       await updateProfile(user, { displayName: username });
 
       setSignUpSuccess(`You've successfully registered as ${username}!`);
+
+      // Reset the form data to clear the input fields
+      setFormData({
+        email: '',
+        password: '',
+        confirmPassword: '',
+        username: '',
+      });
+
+      navigate('/login');
+
     } catch (error) {
       setSignUpSuccess(`There was an error registering: ${error.message}`);
     }
   }
 
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
 
   return (
     <React.Fragment>
       <FormContainer>
-      <form onSubmit={doSignUp}>
-        <FormSection>
-          <div>
-        <h3>Become a Gem</h3>
-        {signUpSuccess}
-        </div>
-        <FormInput
-          type="text"
-          name="email"
-          placeholder="Email"
-          required
-        />
-        <FormInput
-          type="password"
-          name="password"
-          placeholder="Password"
-          required
-        />
-        <FormInput
-          type="password"
-          name="confirmPassword"
-          placeholder="Confirm Password"
-          required
-        />
-        <FormInput
-          type="text"
-          name="username"
-          placeholder="Username"
-          required
-        />
-        <h6>Already have an account? Log in <Link to="/login">here</Link></h6>
-        <FormButton type="submit">Register</FormButton>
-        </FormSection>
-      </form>
+        <form onSubmit={doSignUp}>
+          <FormSection>
+            <div>
+              <h3>Become a Gem</h3>
+              {signUpSuccess}
+            </div>
+            <FormInput
+              type="text"
+              name="email"
+              placeholder="Email"
+              required
+              value={formData.email}
+              onChange={handleInputChange}
+            />
+            <FormInput
+              type="password"
+              name="password"
+              placeholder="Password"
+              required
+              value={formData.password}
+              onChange={handleInputChange}
+            />
+            <FormInput
+              type="password"
+              name="confirmPassword"
+              placeholder="Confirm Password"
+              required
+              value={formData.confirmPassword}
+              onChange={handleInputChange}
+            />
+            <FormInput
+              type="text"
+              name="username"
+              placeholder="Username"
+              required
+              value={formData.username}
+              onChange={handleInputChange}
+            />
+            <h6>Already have an account? Log in <Link to="/login">here</Link></h6>
+            <FormButton type="submit">Register</FormButton>
+          </FormSection>
+        </form>
       </FormContainer>
     </React.Fragment>
   );
