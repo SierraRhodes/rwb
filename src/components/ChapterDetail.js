@@ -205,22 +205,6 @@ function ChapterDetail() {
     setIsEditing(false);
   };
 
-  // const handleDeleteClick = async () => {
-  //   const confirmDelete = window.confirm('Are you sure you want to delete this chapter?');
-
-  //   if (confirmDelete) {
-  //     try {
-  //       const chapterDocRef = doc(db, 'stories', storyId, 'chapters', chapterId);
-  //       await deleteDoc(chapterDocRef);
-
-  //       // Redirect or perform any other actions after deleting
-  //       navigate(`/story-detail/${storyId}`);
-  //     } catch (error) {
-  //       console.error('Error deleting chapter:', error);
-  //     }
-  //   }
-  // };
-
   const handleDeleteClick = () => {
     // Open the custom confirmation dialog
     setIsConfirmDialogOpen(true);
@@ -292,15 +276,16 @@ function ChapterDetail() {
           </FormButtonContainer>
         </FormContainer>
       )}
-      <div>
-        <Comments />
-      </div>
       <DeleteConfirmation
       isOpen={isConfirmDialogOpen}
       onCancel={handleCancelDelete}
       onConfirm={handleConfirmDelete}
     />
+    <div>
+        <Comments chapterId=  {chapter.id} />
+      </div>
     </div>
+
   );
 }
 
