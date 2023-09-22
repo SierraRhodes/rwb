@@ -1,6 +1,84 @@
 import React, { useState, useEffect } from 'react';
 import {db, auth } from '../firebase';
 import { collection, addDoc, getDocs, where, query } from 'firebase/firestore';
+import styled from "styled-components";
+
+const CommentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  //border: 2px solid black;
+`;
+
+const CommentItem = styled.div`
+ //border: 2px solid black;
+  background-color: white;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1), 0 0 20px rgba(255, 255, 255, 0.1);
+  //text-align: center;
+  gap: 15px;
+  width: calc(180% - 20px);
+  height: 100px;
+  margin-bottom: 20px;
+`;
+
+const FormContainer3 = styled.div`
+  
+ //border: 2px solid black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+  background:  #f8f8f8;
+`;
+
+const Textarea = styled.textarea`
+  background-color: #f8f8f8; 
+  border: 2px solid #ddd; 
+  border-radius: 20px; 
+  margin-top: 15px;
+  padding: 10px; 
+  width: 100%; 
+  box-sizing: border-box;
+  resize: none;
+  overflow-y: auto;
+`;
+
+const Icon = styled.img`
+  cursor: pointer;
+  margin-right: 16px; /* Add spacing between icon and text */
+  margin-left: 8px;
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+`;
+
+const IconContainer = styled.div`
+  display: flex;
+  flex-direction: row; /* Arrange items horizontally */
+  width: 100%;
+
+  margin-right: 100px;
+`;
+
+const Button = styled.button`
+background-color: black;
+color: white;
+border: none;
+padding: 10px 20px;
+border-radius: 5px;
+font-size: 16px;
+cursor: pointer;
+transition: background-color 0.3s ease, color 0.3s ease;
+
+&:hover {
+  background-color: white;
+  color: black;
+}
+
+margin-top: 5px;
+`;
 
 function formatTimestamp(timestamp) {
   const currentDate = new Date();
@@ -114,29 +192,27 @@ useEffect(() => {
 }, [chapterId]);
 
 return (
-  <div>
-    <h2>Comments</h2>
-    <div>
-      {/* Display existing comments */}
-      {comments.map((comment, index) => (
-        <div key={index}>
-          <p>{comment.text}</p>
-          <p>
-            <strong>{comment.author}</strong> - {formatTimestamp(comment.timestamp)}
-          </p>
-        </div>
-      ))}
-    </div>
+  <FormContainer3>
+    <CommentContainer>
     <div>
       {/* Add a form for users to submit new comments */}
-      <textarea
+      <Textarea
         placeholder="Add a comment"
         value={commentText}
         onChange={(e) => setCommentText(e.target.value)}
       />
-      <button onClick={addComment}>Add Comment</button>
+      <Icon src="/airplane.png" onClick={addComment}/>
     </div>
-  </div>
+      {comments.map((comment, index) => (
+        <CommentItem key={index}>
+          <p>{comment.text}</p>
+          <p>
+            <strong>{comment.author}</strong> - {formatTimestamp(comment.timestamp)}
+          </p>
+        </CommentItem>
+      ))}
+    </CommentContainer>
+  </FormContainer3>
 );
 }
 

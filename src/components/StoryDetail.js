@@ -60,16 +60,6 @@ margin-left: 50px;
 }
 `;
 
-const BookCoverContainer2 = styled.div`
-  margin-left: 50px;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-
-
 // Create a styled component for the form container
 const FormContainer = styled.div`
   display: flex;

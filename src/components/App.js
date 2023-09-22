@@ -14,6 +14,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Library from "./Library";
 import SearchResults from "./SearchResults";
 import BookList from "./BookList";
+import Footer from "./Footer";
 
 //import styled, { ThemeProvider } from 'styled-components';
 
@@ -24,7 +25,6 @@ function App() {
     <div className="app">
        <Router>
       <Header />
-     
       <Routes>
         <Route path="/library" element={<Library />} />
         <Route path="/book-list" element={<BookList />} />
@@ -41,6 +41,7 @@ function App() {
         <Route path="/" element={<SplashPage />} />
       </Routes>
     </Router>
+    <Footer />
     </div>
   );
 }
