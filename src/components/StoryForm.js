@@ -119,6 +119,11 @@ function StoryForm() {
     event.preventDefault();
   
     const user = auth.currentUser;
+    if (!auth.currentUser) {
+      navigate(`/login`);
+      return;
+    }
+
   
     try {
       if (image) {

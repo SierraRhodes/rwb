@@ -70,27 +70,6 @@ const Title = styled.h4`
   letter-spacing: 2px; /* Add letter spacing for a professional look */
 `;
 
-
-const Title2 = styled.h4`
-  font-size: 40px; /* Smaller font size to complement Title1 */
-  color: #999; /* A darker color to contrast with Title1 */
-  font-weight: normal; /* Use a regular font weight for contrast */
-  text-transform: none; /* Disable text transformation */
-  letter-spacing: 1px; /* Slightly less letter spacing for a subtle effect */
-  margin-top: 10px; /* Add some top margin to separate from Title1 */
-  margin-left: 100px;
-`;
-
-const Title3 = styled.h4`
-  font-size: 30px; /* Smaller font size to complement Title1 */
-  color: #999; /* A darker color to contrast with Title1 */
-  font-weight: normal; /* Use a regular font weight for contrast */
-  text-transform: none; /* Disable text transformation */
-  letter-spacing: 1px; /* Slightly less letter spacing for a subtle effect */
-  margin-top: 20px; /* Add some top margin to separate from Title1 */
-  margin-left: 150px;
-`;
-
 const TitleContainer = styled.div`
   display: flex;
   flex-direction: left;
@@ -121,12 +100,6 @@ return (
       ))}
     </Title>
     </TitleContainer>
-    <Title2>
-      Shine Brighter
-    </Title2>
-    <Title3>
-      Together 
-    </Title3>
     <Register />
   </FullScreenContainer>
 );

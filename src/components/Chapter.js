@@ -20,7 +20,6 @@ const TitleInput = styled.input`
   font-size: 24px; /* Increase font size for the title input */
   padding: 10px;
 
-
   border: none; /* Remove the border when the input is focused */
 
 `;
@@ -119,7 +118,7 @@ const TimerContainer = styled.div`
   justify-content: center; /* Center items horizontally */
   align-items: center; /* Center items vertically */
   padding: 10px;
-  margin-left: 550px;
+  margin-left: 570px;
 `;
 
 const CountdownContainer = styled.div`

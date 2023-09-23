@@ -3,6 +3,67 @@ import React, { useState } from 'react';
 import { auth } from "../firebase.js";
 import { signInWithEmailAndPassword  } from "firebase/auth";
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+
+
+const FullScreenContainer = styled.div`
+  //position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-image: url('/ruby.png'); /* Set the image as the background */
+  background-size: cover; /* Ensure the image covers the entire container */
+  background-position: center; /* Center the image within the container */
+  background-repeat: no-repeat; /* Prevent image repetition */
+  // display: flex;
+  // flex-direction: column;
+  // justify-content: center;
+  //align-items: center;
+  color: white; /* Set text color to white for readability */
+  font-size: 24px; /* Adjust font size as needed */
+  // Add styles for the animation
+  h3, h4 {
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  h3 span, h4 span {
+    display: inline-block;
+    animation: flicker 4s linear infinite alternate;
+  }
+
+  @keyframes flicker {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+  // Add styles for the animation
+  h3, h4 {
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  h3 span, h4 span {
+    display: inline-block;
+    opacity: 0;
+    animation: fillIn 4s steps(5) infinite alternate;
+  }
+
+  @keyframes fillIn {
+    0% {
+      opacity: 0;
+    }
+    20% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+`;
 
 const FormContainer = styled.div`
   display: flex;
@@ -23,7 +84,7 @@ const FormSection = styled.div`
   width: 400px;
   margin-left: 800px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1), 0 0 20px rgba(255, 255, 255, 0.1);
-  
+  border: 2px solid white;
   /* Center the inputs and button horizontally within the FormSection */
   text-align: center;
 `;
@@ -48,6 +109,7 @@ const FormButton = styled.button`
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  font-size: 18px;
 
   &:hover {
     background-color: #0056b3;
@@ -75,6 +137,7 @@ function Login() {
   }
   return (
     <React.Fragment>
+      <FullScreenContainer>
       <FormContainer>
     <FormSection>
     {signInSuccess}
@@ -90,10 +153,12 @@ function Login() {
           type='password'
           name='signInPassword'
           placeholder='Password' />
+         <h6>Not registered? Register <Link to="/">here</Link></h6>
        <FormButton type= 'submit'>Log in!</FormButton>
       </form>
       </FormSection>
       </FormContainer>
+      </FullScreenContainer>
     </React.Fragment>
   );
 }

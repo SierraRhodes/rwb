@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import StoryList from './StoryList';
-//import SearchResults from './SearchResults';
+import {useNavigate } from 'react-router-dom';
 import { db, auth } from '../firebase';
 import { collection, getDocs } from 'firebase/firestore'; 
 function StoryContainer() {
   const [user, setUser] = useState(null);
   const [stories, setStories] = useState([]);
+  const navigate = useNavigate();
  
 
   // Function to fetch user data
@@ -19,7 +20,10 @@ function StoryContainer() {
         // Add other user data as needed
       });
     } else {
-      // If no user is authenticated, set user state to null
+      if (!auth.currentUser) {
+        navigate(`/login`);
+        return;
+      }
       setUser(null);
     }
   };

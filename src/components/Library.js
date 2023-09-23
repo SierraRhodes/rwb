@@ -60,7 +60,7 @@ function Library() {
 // Fetching user's library with chapters
 const fetchUserLibrary = async () => {
   if (!auth.currentUser) {
-    console.log('Login!');
+    navigate(`/login`);
     return;
   }
 
