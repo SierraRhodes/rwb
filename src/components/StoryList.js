@@ -3,6 +3,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
+
 const StoryListContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -25,8 +26,12 @@ const Title = styled.h2`
 `;
 
 const StoryImage = styled.img`
-  width: 200px; /* Set the width to 100px */
-  height: 300px; /* Set the height to 200px */
+  max-width: 100%; /* Ensure the image doesn't exceed the container width */
+  max-height: 100%; /* Ensure the image doesn't exceed the container height */
+  width: auto; /* Allow the image to scale width proportionally */
+  height: auto; /* Allow the image to scale height proportionally */
+  display: block; /* Remove any extra spacing below the image */
+  aspect-ratio: 6/9; /* Enforce a 16:9 aspect ratio */
 `;
 
 function StoryList({ stories, user }) {

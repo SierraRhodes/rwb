@@ -24,7 +24,10 @@ const FormSection = styled.div`
   height: 400px;
   width: 400px;
   margin-left: 800px;
+  margin-top: 20px;
+  margin-bottom: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1), 0 0 20px rgba(255, 255, 255, 0.1);
+  border: 2px solid white;
 `;
 
 const FormInput = styled.input`
@@ -34,7 +37,7 @@ const FormInput = styled.input`
   border: 1px solid #ccc;
   border-radius: 5px;
   background-color: transparent;
-  color: #333;
+  color: white;
   
 `;
 
@@ -46,6 +49,8 @@ const FormButton = styled.button`
   padding-top: 10px;
   border-radius: 5px;
   cursor: pointer;
+  margin-bottom: 10px;
+  font-size: 18px;
   transition: background-color 0.3s ease;
 
   display: flex;
@@ -56,6 +61,17 @@ const FormButton = styled.button`
   &:hover {
     background-color: #0056b3;
   }
+`;
+
+const Title = styled.div`
+ margin-top: 10px;
+ padding-top: 10px;
+ font-size: 24px;
+ font-weight: bold;
+`;
+
+const FormButtonContainer = styled.div`
+ margin-bottom: 10px;
 `;
 
 function Register() {
@@ -121,10 +137,10 @@ function Register() {
       <FormContainer>
         <form onSubmit={doSignUp}>
           <FormSection>
-            <div>
+            <Title>
               <h3>Become a Gem</h3>
               {signUpSuccess}
-            </div>
+            </Title>
             <FormInput
               type="text"
               name="email"
@@ -158,7 +174,9 @@ function Register() {
               onChange={handleInputChange}
             />
             <h6>Already have an account? Log in <Link to="/login">here</Link></h6>
+            <FormButtonContainer>
             <FormButton type="submit">Register</FormButton>
+            </FormButtonContainer>
           </FormSection>
         </form>
       </FormContainer>

@@ -29,28 +29,21 @@ margin-left: 50px;
 `;
 
 const Button = styled.button`
-background: linear-gradient(
-  45deg,
-  #ff0000,
-  #ff9900,
-  #ffff00,
-  #00ff00,
-  #0099ff,
-  #9900ff,
-  #ff00ff
-); /* Rainbow-like gradient background */
-background-size: 200% 200%;
-color: black;
-font-weight: bold;
+background-color: black;
+color: white;
 border: none;
 padding: 10px 20px;
 border-radius: 5px;
+font-size: 16px;
 cursor: pointer;
-transition: background 0.5s ease;
+transition: background-color 0.3s ease, color 0.3s ease;
 
 &:hover {
-  background-position: right center;
+  background-color: white;
+  color: black;
 }
+
+margin-top: 5px;
 `;
 
 const DeleteConfirmationDialog = ({ isOpen, onCancel, onConfirm }) => {

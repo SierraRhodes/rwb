@@ -115,6 +115,7 @@ const FormButtonContainer = styled.div`
   flex-direction: row; /* Stack the buttons vertically */
   align-items: center; /* Center-align the buttons horizontally */
   gap: 10px;
+  position:
 `;
 
 function ChapterDetail() {
@@ -257,6 +258,14 @@ function ChapterDetail() {
         </FormContainer>
       ) : (
         <FormContainer>
+          <FormButtonContainer>
+          {isOwner && (
+          <FormButton onClick={handleEditClick}>Edit Chapter</FormButton>
+          )}
+          {isOwner && (
+          <FormButton onClick={handleDeleteClick}>Delete Chapter</FormButton>
+          )}
+          </FormButtonContainer>
           <TitleInput2
           value={chapter.title}
           readOnly={true} // Prevent editing the title
@@ -266,14 +275,7 @@ function ChapterDetail() {
             readOnly={true} // Prevent editing when not in editing mode
             value={chapter.content}
           />
-          <FormButtonContainer>
-          {isOwner && (
-          <FormButton onClick={handleEditClick}>Edit Chapter</FormButton>
-          )}
-          {isOwner && (
-          <FormButton onClick={handleDeleteClick}>Delete Chapter</FormButton>
-          )}
-          </FormButtonContainer>
+       
         </FormContainer>
       )}
       <DeleteConfirmation

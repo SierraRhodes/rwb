@@ -15,7 +15,7 @@ import Library from "./Library";
 import SearchResults from "./SearchResults";
 import BookList from "./BookList";
 import Footer from "./Footer";
-
+import GlobalStyle from './GlobalStyle';
 //import styled, { ThemeProvider } from 'styled-components';
 
 
@@ -23,6 +23,7 @@ import Footer from "./Footer";
 function App() {
   return (
     <div className="app">
+
        <Router>
       <Header />
       <Routes>
@@ -41,7 +42,9 @@ function App() {
         <Route path="/" element={<SplashPage />} />
       </Routes>
     </Router>
+    {/* <FooterContainer>
     <Footer />
+    </FooterContainer> */}
     </div>
   );
 }
