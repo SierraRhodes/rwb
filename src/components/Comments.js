@@ -11,16 +11,16 @@ const CommentContainer = styled.div`
 `;
 
 const CommentItem = styled.div`
- //border: 2px solid black;
   background-color: white;
   padding: 10px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1), 0 0 20px rgba(255, 255, 255, 0.1);
-  //text-align: center;
   gap: 15px;
-  width: calc(180% - 20px);
-  height: 100px;
+  // width: calc(105% - 20px);
+  width: 350px;
+  height: 100px; /* Fixed height */
   margin-bottom: 20px;
+  overflow-y: auto !important; /* Add a vertical scrollbar when content overflows */
 `;
 
 const FormContainer3 = styled.div`
