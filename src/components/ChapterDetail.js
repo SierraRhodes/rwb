@@ -18,6 +18,8 @@ const FormContainer = styled.div`
   align-items: center;
   height: 100vh;
   padding: 20px;
+  max-width: 100%; /* Limit the maximum width of the form container */
+  overflow-x: auto; /* Allow horizontal scrolling if the content overflows 
 `;
 
 const TitleInput = styled.input`

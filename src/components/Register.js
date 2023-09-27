@@ -11,6 +11,8 @@ const FormContainer = styled.div`
   justify-content: center;
   align-items: center; 
   padding: 20px;
+  border: 2px black solid;
+  background: black;
 `;
 
 const FormSection = styled.div`
@@ -135,6 +137,8 @@ function Register() {
   return (
     <React.Fragment>
       <FormContainer>
+        <h5> a haven for marginalized and underrepresented voices, a place meticulously designed to empower, celebrate, and amplify your unique stories. 
+</h5>
         <form onSubmit={doSignUp}>
           <FormSection>
             <Title>
