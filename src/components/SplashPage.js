@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Register from './Register';
+import Join from './Join';
 import styled from 'styled-components';
 
 // Create a styled component to cover the entire viewport
@@ -72,8 +73,9 @@ const Title = styled.h4`
 
 const TitleContainer = styled.div`
   display: flex;
-  flex-direction: left;
-  align-items: column;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   margin-top: 100px;
 `;
 
@@ -93,14 +95,18 @@ const currentWord = words[wordIndex];
 
 return (
   <FullScreenContainer>
-    <TitleContainer>
-    {/* <Title>
+    {/* <TitleContainer>
+    <Title>
         Reading While B{currentWord.split('').map((letter, index) => (
         <span key={index}>{letter}</span>
       ))}
-    </Title> */}
-    </TitleContainer>
+    </Title>
+    </TitleContainer> */}
     <Register />
+    <div id="join">
+        <Join />
+      </div>
+
   </FullScreenContainer>
 );
 }

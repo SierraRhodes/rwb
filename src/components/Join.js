@@ -1,7 +1,7 @@
 //Provides a form for users to create new accounts.
 //Allows users to log in to access private stories.
-import React, { useState, useEffect } from 'react';
-import { auth, db } from '../firebase.js'; // Import your Firestore instance
+import React, { useState } from 'react';
+import { auth } from '../firebase.js'; // Import your Firestore instance
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import styled from 'styled-components'; 
 import { Link, useNavigate } from 'react-router-dom';
@@ -10,24 +10,12 @@ const FormContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: row; 
-  padding: 20px;
-  border: 2px black solid;
-  background: black;
+  //padding: 20px;
+  margin-bottom: 100px; 
+  margin-right: 100px;
 `;
 
-const TitleContainer = styled.div`
-  border: 2px solid white;
-  width: 300px;
-  height: 350px;
-  padding: 20px; /* Increase padding */
-  margin: 20px; /* Increase margin */
 
-`;
-
-const H5 = styled.h5`
-  font-size: 20px; /* Increase font size */
-  line-height: 1.5; /* Increase line height for spacing */
-`;
 
 const FormSection = styled.div`
   display: flex; /* Make it a flex container */
@@ -94,7 +82,7 @@ const FormButtonContainer = styled.div`
  margin-bottom: 10px;
 `;
 
-function Register() {
+function Join() {
   const [signUpSuccess, setSignUpSuccess] = useState(null);
   const [formData, setFormData] = useState({
     email: '',
@@ -156,22 +144,7 @@ function Register() {
     <React.Fragment>
       
       <FormContainer>
-      <TitleContainer>
-        <h4>Reading While Black</h4>
-        <H5> a haven for marginalized and underrepresented voices . . . 
-</H5>
-</TitleContainer>
-<TitleContainer>
-        <h4>Reading While Brown</h4>
-        <H5> Designed to empower, celebrate, and amplify. . .
-</H5>
-</TitleContainer>
-<TitleContainer>
-        <h4>Reading While Bold</h4>
-        <H5> Your unique stories 
-</H5>
-</TitleContainer>
-        {/* <form onSubmit={doSignUp}>
+        <form onSubmit={doSignUp}>
           <FormSection>
             <Title>
               <h3>Become a Gem</h3>
@@ -214,10 +187,10 @@ function Register() {
             <FormButton type="submit">Register</FormButton>
             </FormButtonContainer>
           </FormSection>
-        </form> */}
+        </form>
       </FormContainer>
     </React.Fragment>
   );
 }
 
-export default Register;
+export default Join;
