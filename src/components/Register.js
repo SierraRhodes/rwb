@@ -1,6 +1,6 @@
 //Provides a form for users to create new accounts.
 //Allows users to log in to access private stories.
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { auth, db } from '../firebase.js'; // Import your Firestore instance
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import styled from 'styled-components'; 
@@ -9,10 +9,24 @@ import { Link, useNavigate } from 'react-router-dom';
 const FormContainer = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center; 
+  align-items: row; 
   padding: 20px;
   border: 2px black solid;
   background: black;
+`;
+
+const TitleContainer = styled.div`
+  border: 2px solid white;
+  width: 300px;
+  height: 400px;
+  padding: 20px; /* Increase padding */
+  margin: 20px; /* Increase margin */
+
+`;
+
+const H5 = styled.h5`
+  font-size: 20px; /* Increase font size */
+  line-height: 1.5; /* Increase line height for spacing */
 `;
 
 const FormSection = styled.div`
@@ -23,13 +37,15 @@ const FormSection = styled.div`
   padding: 10px;
   background-color: rgba(255, 255, 255, 0.1);
   border-radius: 5px;
-  height: 400px;
-  width: 400px;
+  height: 350px;
+  width: 350px;
   margin-left: 800px;
   margin-top: 20px;
   margin-bottom: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1), 0 0 20px rgba(255, 255, 255, 0.1);
   border: 2px solid white;
+  background: white;
+  color: black;
 `;
 
 const FormInput = styled.input`
@@ -40,6 +56,8 @@ const FormInput = styled.input`
   border-radius: 5px;
   background-color: transparent;
   color: white;
+  height: 30px;
+
   
 `;
 
@@ -136,10 +154,24 @@ function Register() {
 
   return (
     <React.Fragment>
+      
       <FormContainer>
-        <h5> a haven for marginalized and underrepresented voices, a place meticulously designed to empower, celebrate, and amplify your unique stories. 
-</h5>
-        <form onSubmit={doSignUp}>
+      <TitleContainer>
+        <h4>Reading While Black</h4>
+        <H5> a haven for marginalized and underrepresented voices . . . 
+</H5>
+</TitleContainer>
+<TitleContainer>
+        <h4>Reading While Brown</h4>
+        <H5> Designed to empower, celebrate, and amplify. . .
+</H5>
+</TitleContainer>
+<TitleContainer>
+        <h4>Reading While Bold</h4>
+        <H5> Your unique stories 
+</H5>
+</TitleContainer>
+        {/* <form onSubmit={doSignUp}>
           <FormSection>
             <Title>
               <h3>Become a Gem</h3>
@@ -182,7 +214,7 @@ function Register() {
             <FormButton type="submit">Register</FormButton>
             </FormButtonContainer>
           </FormSection>
-        </form>
+        </form> */}
       </FormContainer>
     </React.Fragment>
   );

@@ -94,11 +94,11 @@ const currentWord = words[wordIndex];
 return (
   <FullScreenContainer>
     <TitleContainer>
-    <Title>
+    {/* <Title>
         Reading While B{currentWord.split('').map((letter, index) => (
         <span key={index}>{letter}</span>
       ))}
-    </Title>
+    </Title> */}
     </TitleContainer>
     <Register />
   </FullScreenContainer>
