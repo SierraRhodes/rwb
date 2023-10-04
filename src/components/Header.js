@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -54,15 +54,25 @@ const NavItem = styled.div`
   }
 `;
 
+
 const DropdownMenu = styled.div`
   position: absolute;
   top: 100%; /* Position the dropdown below the NavItem */
   left: 0;
+  right: 0;
   background-color: white;
   border: 1px solid #ccc;
   border-radius: 4px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   display: ${props => (props.show ? 'block' : 'none')}; /* Control visibility based on 'show' prop */
+
+  /* Add dynamic positioning */
+  transform-origin: top;
+  transform: translateY(5px); /* Adjust the distance between the NavItem and the dropdown */
+
+  /* Adjust the dropdown width and z-index as needed */
+  min-width: 200px;
+  z-index: 1;
 `;
 
 const DropdownMenuItem = styled.div`
@@ -88,19 +98,50 @@ const Header = () => {
   const [showWriteDropdown, setShowWriteDropdown] = useState(false);
   const [showAccountDropdown, setShowAccountDropdown] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
+  const [dropdownPosition, setDropdownPosition] = useState({ top: '100%', left: '0' });
   const navigate = useNavigate();
+  const dropdownRef = useRef(null);
+
+
+  useEffect(() => {
+    // Add a click event listener to the window to handle clicks outside of the dropdown menus
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        // Clicked outside of the dropdown menus, so close them
+        setShowWriteDropdown(false);
+        setShowAccountDropdown(false);
+      }
+    };
+
+    // Attach the event listener when the component mounts
+    window.addEventListener('click', handleClickOutside);
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      window.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
 
   const toggleWriteDropdown = () => {
-    setShowWriteDropdown(prevState => !prevState);
+    setShowWriteDropdown((prevState) => !prevState);
+    setShowAccountDropdown(false);
+    setDropdownPosition({ top: '100%', left: '0' }); // Reset dropdown position
   };
 
   const toggleAccountDropdown = () => {
-    setShowAccountDropdown(prevState => !prevState);
+    setShowAccountDropdown((prevState) => !prevState);
+    setShowWriteDropdown(false);
+    setDropdownPosition({ top: '100%', left: '0' }); // Reset dropdown position
   };
 
   const handleWriteOptionClick = (option) => {
     setSelectedOption(option);
     toggleWriteDropdown();
+  };
+
+  const handleAccountOptionClick = (option) => {
+    setSelectedOption(option);
+    toggleAccountDropdown();
   };
 
   const navigateTo = (path) => {
@@ -114,15 +155,17 @@ const Header = () => {
 
   return (
     <Navbar>
-      <Logo><i className="bi bi-gem diamond-icon"></i>RWB</Logo>
+      <Logo>
+        <i className="bi bi-gem diamond-icon"></i>RWB
+      </Logo>
       <Search onSearch={handleSearch} />
-        
+
       <NavItems>
         <NavItem>Live Streams</NavItem>
         <NavItem>Connect</NavItem>
         <NavItem onClick={toggleWriteDropdown}>Write</NavItem>
         {/* The DropdownMenu component for "Write" */}
-        <DropdownMenu show={showWriteDropdown}>
+        <DropdownMenu show={showWriteDropdown} style={dropdownPosition}>
           <DropdownMenuItem onClick={() => handleWriteOptionClick('create')}>
             <span onClick={() => navigateTo("/story-form")}>Create New Story</span>
           </DropdownMenuItem>
@@ -133,18 +176,29 @@ const Header = () => {
         {/* End of DropdownMenu for "Write" */}
         <NavItem onClick={toggleAccountDropdown}>Account</NavItem>
         {/* The DropdownMenu component for "Account" */}
-        <DropdownMenu show={showAccountDropdown}>
-          <DropdownMenuItem onClick={() => navigateTo("/register")}>Create an Account</DropdownMenuItem>
-          <DropdownMenuItem onClick={() => navigateTo("/login")}>Log In</DropdownMenuItem>
-          <DropdownMenuItem onClick={() => navigateTo("/logout")}>Log Out</DropdownMenuItem>
-          <DropdownMenuItem onClick={() => navigateTo("/library")}>Profile</DropdownMenuItem>
-          <DropdownMenuItem onClick={() => navigateTo("/")}>Inbox</DropdownMenuItem>
+        <DropdownMenu show={showAccountDropdown} style={dropdownPosition}>
+          <DropdownMenuItem onClick={() => handleAccountOptionClick('login')}>
+            <span onClick={() => navigateTo("/login")}>Log In</span>
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => handleAccountOptionClick('logout')}>
+            <span onClick={() => navigateTo("/logout")}>Log Out</span>
+          </DropdownMenuItem>
+          <hr></hr>
+          <DropdownMenuItem onClick={() => handleAccountOptionClick('library')}>
+            <span onClick={() => navigateTo("/library")}>Library</span>
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => handleAccountOptionClick('profile')}>
+            <span onClick={() => navigateTo("/")}>Profile</span>
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => handleAccountOptionClick('inbox')}>
+            <span onClick={() => navigateTo("/")}>Inbox</span>
+          </DropdownMenuItem>
         </DropdownMenu>
+        {/* End of DropdownMenu for "Account" */}
       </NavItems>
     </Navbar>
   );
 };
 
 export default Header;
-
 
