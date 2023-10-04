@@ -34,11 +34,28 @@ const StoryItem = styled.div`
     color: #333; /* Choose a different color for the title */
   }
 
-  /* Place the Delete button at the bottom */
-  .delete-button {
-    margin-top: auto;
-  }
+  // /* Place the Delete button at the bottom */
+  // .delete-button {
+  //   margin-top: auto;
+  // }
 `;
+
+const Button = styled.button`
+  background-color: black;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  
+  &:hover {
+    background-color: white;
+    color: black;
+  }
+  margin-top: 5px;
+`
 
 const Title = styled.h2`
   text-align: center;
@@ -157,8 +174,8 @@ const fetchUserLibrary = async () => {
             <StoryImage src={story.imageURL} alt="Story Cover" />
             <h4>{story.title}</h4>
             <p>Chapters: {story.chapters ? story.chapters.length : 0}</p>
-            <p>{truncateDescription(story.description, 30)}</p>
-            <button id="delete-button" onClick={() => handleDeleteStory(story.id)}>Delete</button>
+            {/* <p>{truncateDescription(story.description, 30)}</p> */}
+            <Button id="delete-button" onClick={() => handleDeleteStory(story.id)}>Remove</Button>
           </StoryItem>
         ))}
       </StoryListContainer>
