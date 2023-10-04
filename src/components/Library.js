@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { db, auth } from '../firebase';
-import { collection, getDocs, doc, getDoc } from 'firebase/firestore';
+import { collection, getDocs, doc, getDoc, deleteDoc } from 'firebase/firestore';
 
 const StoryListContainer = styled.div`
   display: flex;
@@ -32,6 +32,11 @@ const StoryItem = styled.div`
     font-weight: bold; /* Make title bold */
     margin-bottom: 10px; /* Add some space below the title */
     color: #333; /* Choose a different color for the title */
+  }
+
+  /* Place the Delete button at the bottom */
+  .delete-button {
+    margin-top: auto;
   }
 `;
 
@@ -131,6 +136,18 @@ const fetchUserLibrary = async () => {
     fetchUserLibrary();
   }, []);
 
+  const handleDeleteStory = async (storyId) => {
+    try {
+      // Remove the story from the user's library
+      await deleteDoc(doc(db, 'users', auth.currentUser.uid, 'library', storyId));
+  
+      // Update the state to remove the deleted story from the user's library
+      setUserStories((prevUserStories) => prevUserStories.filter((story) => story.id !== storyId));
+    } catch (error) {
+      console.error('Error deleting story:', error);
+    }
+  };
+
   return (
     <div>
       <Title> My Library</Title>
@@ -141,6 +158,7 @@ const fetchUserLibrary = async () => {
             <h4>{story.title}</h4>
             <p>Chapters: {story.chapters ? story.chapters.length : 0}</p>
             <p>{truncateDescription(story.description, 30)}</p>
+            <button id="delete-button" onClick={() => handleDeleteStory(story.id)}>Delete</button>
           </StoryItem>
         ))}
       </StoryListContainer>

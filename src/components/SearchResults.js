@@ -12,12 +12,28 @@ const StoryListContainer = styled.div`
 `;
 
 const StoryItem = styled.div`
-  width: calc(17% - 20px); 
+  width: calc(17% - 20px); /* 25% width for each story item with 20px gap */
   padding: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1), 0 0 20px rgba(255, 255, 255, 0.1);
   border-radius: 5px;
   cursor: pointer;
-  
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background-color: #fff;
+  color: #333;
+  transition: transform 0.2s ease-in-out;
+
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2), 0 0 30px rgba(255, 255, 255, 0.2);
+  }
+
+  h3 {
+    font-size: 24px; /* Increase title font size */
+    font-weight: bold; /* Make title bold */
+    margin-bottom: 10px; /* Add some space below the title */
+    color: #333; /* Choose a different color for the title */
+  }
 `;
 
 const Title = styled.h2`

@@ -102,6 +102,8 @@ const Header = () => {
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
 
+  
+
 
   useEffect(() => {
     // Add a click event listener to the window to handle clicks outside of the dropdown menus
