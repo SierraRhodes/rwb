@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-//import UserDashboard from './UserDashboard';
 import StoryForm from './StoryForm';
 import Header from './Header';
 import Login from "./Login";
@@ -16,8 +15,7 @@ import SearchResults from "./SearchResults";
 import BookList from "./BookList";
 import Join from "./Join";
 import Footer from "./Footer";
-import GlobalStyle from './GlobalStyle';
-//import styled, { ThemeProvider } from 'styled-components';
+
 
 
 
@@ -75,9 +73,9 @@ function App() {
         <Route path="/" id="home" element={<SplashPage />} />
       </Routes>
     </Router>
-    {/* <FooterContainer>
-    <Footer />
-    </FooterContainer> */}
+
+    {/* <Footer /> */}
+ 
     </div>
     
   );
