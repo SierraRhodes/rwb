@@ -4,6 +4,7 @@ import { auth } from "../firebase.js";
 import { signInWithEmailAndPassword  } from "firebase/auth";
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import {useNavigate } from 'react-router-dom';
 
 
 const FullScreenContainer = styled.div`
@@ -117,8 +118,7 @@ const FormButton = styled.button`
 `;
 
 function Login() {
-
-
+  const navigate = useNavigate();
   const [signInSuccess, setSignInSuccess] = useState(null); 
 
 
@@ -129,10 +129,10 @@ function Login() {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         setSignInSuccess(`You've successfully logged in ${userCredential.user.email}!`)
-      })
+        navigate('/story-list')})
       .catch((error) => {
         setSignInSuccess(`There was an error logging in: ${error.message}!`)
-
+      
       })
   }
   return (
