@@ -65,7 +65,7 @@ function App() {
         <Route path= "/story-list" element={<StoryContainer />} /> 
         <Route path= "/chapter" element={<Chapter />} />
         <Route path="/story-detail/:id" element={<StoryDetail />} />
-        <Route path="/chapter-detail/:storyId/:chapterId" element={<ChapterDetail />} />
+        <Route path="/chapter-detail/:storyId/:chapterId/" element={<ChapterDetail />} />
         <Route path= "/register" element={<Register />} />
         <Route path= "/story-form" element={<StoryForm />} />
         <Route path= "/logout" element={<Logout />} />

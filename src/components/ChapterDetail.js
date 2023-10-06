@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { doc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore';
+import { doc, getDoc, updateDoc, deleteDoc, getDocs, collection } from 'firebase/firestore';
 import { db, auth } from '../firebase';
 import { useNavigate } from 'react-router-dom';
 import DOMPurify from 'dompurify';
@@ -128,6 +128,7 @@ function ChapterDetail() {
   const [isOwner, setIsOwner] = useState(false); 
   const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
   const navigate = useNavigate();
+  const [chapters, setChapters] = useState([]); 
 
   useEffect(() => {
     const storyDocRef = doc(db, 'stories', storyId);
@@ -167,8 +168,39 @@ function ChapterDetail() {
       }
     };
 
+    const fetchChapters = async () => { // Fetch all chapters for the current story
+      try {
+        const storyChaptersSnapshot = await getDocs(
+          collection(db, 'stories', storyId, 'chapters')
+        );
+        const chaptersData = storyChaptersSnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setChapters(chaptersData);
+      } catch (error) {
+        console.error('Error fetching chapters:', error);
+      }
+    };
+
     fetchChapter();
+    fetchChapters(); // Fetch chapters when the component mounts
   }, [storyId, chapterId]);
+
+
+  // Function to find the index of the current chapter in the list of chapters
+  const findCurrentChapterIndex = () => {
+    return chapters.findIndex((chap) => chap.id === chapterId);
+  };
+
+  // Function to navigate to the next chapter
+  const navigateToNextChapter = () => {
+    const currentIndex = findCurrentChapterIndex();
+    if (currentIndex !== -1 && currentIndex < chapters.length - 1) {
+      const nextChapterId = chapters[currentIndex + 1].id;
+      navigate(`/chapter-detail/${storyId}/${nextChapterId}`);
+    }
+  };
 
   const sanitizeHtml = (html) => {
     return DOMPurify.sanitize(html);
@@ -267,6 +299,11 @@ function ChapterDetail() {
           {isOwner && (
           <FormButton onClick={handleDeleteClick}>Delete Chapter</FormButton>
           )}
+             {/* Add a button to navigate to the next chapter */}
+        {findCurrentChapterIndex() !== -1 &&
+          findCurrentChapterIndex() < chapter.length - 1 && (
+            <button onClick={navigateToNextChapter}>Next Chapter</button>
+          )}
           </FormButtonContainer>
           <TitleInput2
           value={chapter.title}
@@ -285,6 +322,10 @@ function ChapterDetail() {
       onCancel={handleCancelDelete}
       onConfirm={handleConfirmDelete}
     />
+     {findCurrentChapterIndex() !== -1 &&
+          findCurrentChapterIndex() < chapters.length - 1 && (
+            <button onClick={navigateToNextChapter}>Next Chapter</button>
+          )}
     <div>
         <Comments chapterId=  {chapter.id} />
       </div>
