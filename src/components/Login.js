@@ -148,7 +148,7 @@ function Login() {
         <FormInput
           type='text'
           name='signInEmail'
-          placeholder='email' />
+          placeholder='Email' />
         <FormInput 
           type='password'
           name='signInPassword'

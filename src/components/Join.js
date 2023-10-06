@@ -43,7 +43,7 @@ const FormInput = styled.input`
   border: 1px solid #ccc;
   border-radius: 5px;
   background-color: transparent;
-  color: white;
+  color: black;
   height: 30px;
 
   
