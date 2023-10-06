@@ -97,7 +97,32 @@ const FormButton = styled.button`
   
   transition: background-color 0.3s ease, transform 0.2s ease; /* Add a smooth transition for background color and transform */
 
-  display: flex-right; /* Use flex to center the content both horizontally and vertically */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+
+  &:hover {
+    background-color: #0056b3;
+    transform: scale(1.05); /* Add a slight scale effect on hover */
+  }
+  
+  &:active {
+    transform: scale(0.95); /* Add a scale effect when the button is clicked */
+  }
+`;
+
+const FormButton2 = styled.button`
+  background-color: #007BFF;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  margin-left: 660px;
+  
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Add a smooth transition for background color and transform */
+
+  display: center; /* Use flex to center the content both horizontally and vertically */
   justify-content: center;
 
 
@@ -322,10 +347,12 @@ function ChapterDetail() {
       onCancel={handleCancelDelete}
       onConfirm={handleConfirmDelete}
     />
+    <FormButtonContainer>
      {findCurrentChapterIndex() !== -1 &&
           findCurrentChapterIndex() < chapters.length - 1 && (
-            <button onClick={navigateToNextChapter}>Next Chapter</button>
+            <FormButton2 onClick={navigateToNextChapter}>Next Chapter</FormButton2>
           )}
+          </FormButtonContainer>
     <div>
         <Comments chapterId=  {chapter.id} />
       </div>
