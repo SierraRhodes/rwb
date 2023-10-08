@@ -75,7 +75,6 @@ https://www.learnhowtoprogram.com/react-part-time/react-with-nosql/setting-up-a-
 3. Create your .env file in your root directory
 Within that file it should contain information about your database
 
-```
  firebaseConfig = {
   apiKey: "YOUR-UNIQUE-CREDENTIALS",
   authDomain: "YOUR-PROJECT-NAME.firebaseapp.com",
@@ -84,7 +83,7 @@ Within that file it should contain information about your database
   messagingSenderId: "YOUR-UNIQUE-CREDENTIALS",
   appId: "YOUR-UNIQUE-APPID"
 };
-```
+
 4. Enjoy! 
 
 ```
