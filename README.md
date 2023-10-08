@@ -65,6 +65,30 @@ Sep 14th
 
 ```
 
+# Set Up
+```
+1. Git clone the repository in your terminal. ex: git clone https://github.com/SierraRhodes/rwb.git
+
+2. Create your own database through Firebase
+https://www.learnhowtoprogram.com/react-part-time/react-with-nosql/setting-up-a-firebase-project-firestore-database-and-web-app
+
+3. Create your .env file in your root directory
+Within that file it should contain information about your database
+
+```
+ firebaseConfig = {
+  apiKey: "YOUR-UNIQUE-CREDENTIALS",
+  authDomain: "YOUR-PROJECT-NAME.firebaseapp.com",
+  projectId: "YOUR-UNIQUE-PROJECT-NAME",
+  storageBucket: "YOUR-UNIQUE-URL",
+  messagingSenderId: "YOUR-UNIQUE-CREDENTIALS",
+  appId: "YOUR-UNIQUE-APPID"
+};
+```
+4. Enjoy! 
+
+```
+
 
 # Getting Started with Create React App
 
