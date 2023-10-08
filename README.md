@@ -73,7 +73,7 @@ Sep 14th
 https://www.learnhowtoprogram.com/react-part-time/react-with-nosql/setting-up-a-firebase-project-firestore-database-and-web-app
 
 3. Create your .env file in your root directory
-Within that file it should contain information about your database
+Within that file it should contain information about your database:
 
  firebaseConfig = {
   apiKey: "YOUR-UNIQUE-CREDENTIALS",
@@ -84,7 +84,12 @@ Within that file it should contain information about your database
   appId: "YOUR-UNIQUE-APPID"
 };
 
-4. Enjoy! 
+4. Run npm run build in your terminal (Make sure you are in the correct directory)
+
+5. Run npm start in your terminal
+
+6. Enjoy!
+
 
 ```
 
