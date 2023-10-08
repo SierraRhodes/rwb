@@ -133,7 +133,6 @@ function Comments({ chapterId }) {
       // Add the new comment to Firestore
       const commentsRef = collection(db, 'comments');
       await addDoc(commentsRef, newComment);
-      console.log('Comment added to Firestore');
 
       // Add the new comment to the existing comments array
       setComments([...comments, newComment]);

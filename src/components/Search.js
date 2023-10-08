@@ -9,10 +9,10 @@ const SearchContainer = styled.div`
   background: linear-gradient(
     45deg,
     rgba(255, 204, 0, 0.9),   /* Adjust opacity (0.9) to make it paler */
-    rgba(255, 153, 204, 0.9), /* Adjust opacity (0.9) to make it paler */
-    rgba(204, 153, 255, 0.9), /* Adjust opacity (0.9) to make it paler */
-    rgba(153, 204, 255, 0.9), /* Adjust opacity (0.9) to make it paler */
-    rgba(102, 255, 204, 0.9)  /* Adjust opacity (0.9) to make it paler */
+    rgba(255, 153, 204, 0.9), 
+    rgba(204, 153, 255, 0.9), 
+    rgba(153, 204, 255, 0.9), 
+    rgba(102, 255, 204, 0.9) 
   );
   padding: 5px;
   border-radius: 20px;
@@ -40,7 +40,6 @@ background: linear-gradient(
   height: 30px;
   border: none;
   position: absolute;
-  //top: 1%; /* Adjust the top and left values as needed */
   bottom: 22px;
   
 `;
@@ -49,7 +48,18 @@ background: linear-gradient(
 function Search({ onSearch }) {
   const [searchQuery, setSearchQuery] = useState('');
 
+  const handleSearchClick = () => {
+    // Call the onSearch prop with the current searchQuery value
+    onSearch(searchQuery);
+  };
 
+
+  const handleInputKeyPress = (e) => {
+    // If Enter key is pressed (key code 13), call onSearch
+    if (e.keyCode === 13) {
+      onSearch(searchQuery);
+    }
+  };
   return (
     <SearchContainer>
       {/* <i className="bi bi-gem diamond-icon "></i> */}
@@ -57,15 +67,15 @@ function Search({ onSearch }) {
         type="text"
         placeholder="Search..."
         value={searchQuery}
+        onKeyUp={handleInputKeyPress}
         onChange={(e) => setSearchQuery(e.target.value)}
       />
       
       {/* Add a Link to SearchResults */}
       <Link to={`/search/${searchQuery}`} className="search-link">
 
-  {/* Magnifying glass icon using inline SVG */}
   <div>
-    <Button>
+    <Button onClick={handleSearchClick}>
 
   <svg
     xmlns="http://www.w3.org/2000/svg"

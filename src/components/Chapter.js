@@ -414,7 +414,7 @@ function Chapter() {
       };
 
       const docRef = await addDoc(chaptersRef, newChapter);
-      console.log('Chapter added with ID:', docRef.id);
+    
 
       navigate(`/story-detail/${storyId}`);
       setChapterTitle('');
