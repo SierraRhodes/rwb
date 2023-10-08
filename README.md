@@ -70,19 +70,18 @@ Sep 14th
 1. Git clone the repository in your terminal. ex: git clone https://github.com/SierraRhodes/rwb.git
 
 2. Create your own database through Firebase
-https://www.learnhowtoprogram.com/react-part-time/react-with-nosql/setting-up-a-firebase-project-firestore-database-and-web-app
+https://www.learnhowtoprogram.com/react-part-time/react-with-nosql
+setting-up-a-firebase-project-firestore-database-and-web-app
 
 3. Create your .env file in your root directory
 Within that file it should contain information about your database:
 
- firebaseConfig = {
-  apiKey: "YOUR-UNIQUE-CREDENTIALS",
-  authDomain: "YOUR-PROJECT-NAME.firebaseapp.com",
-  projectId: "YOUR-UNIQUE-PROJECT-NAME",
-  storageBucket: "YOUR-UNIQUE-URL",
-  messagingSenderId: "YOUR-UNIQUE-CREDENTIALS",
-  appId: "YOUR-UNIQUE-APPID"
-};
+REACT_APP_FIREBASE_API_KEY = "YOUR-UNIQUE-CREDENTIALS"
+REACT_APP_FIREBASE_AUTH_DOMAIN = "YOUR-PROJECT-NAME.firebaseapp.com"
+REACT_APP_FIREBASE_PROJECT_ID = "YOUR-PROJECT-FIREBASE-PROJECT-ID"
+REACT_APP_FIREBASE_STORAGE_BUCKET = "YOUR-PROJECT-NAME.appspot.com"
+REACT_APP_FIREBASE_MESSAGING_SENDER_ID = "YOUR-PROJECT-SENDER-ID"
+REACT_APP_FIREBASE_APP_ID = "YOUR-PROJECT-APP-ID"
 
 4. Run npm run build in your terminal (Make sure you are in the correct directory)
 
