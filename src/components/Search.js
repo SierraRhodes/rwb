@@ -53,7 +53,6 @@ function Search({ onSearch }) {
     onSearch(searchQuery);
   };
 
-
   const handleInputKeyPress = (e) => {
     // If Enter key is pressed (key code 13), call onSearch
     if (e.keyCode === 13) {

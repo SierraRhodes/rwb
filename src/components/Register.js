@@ -122,7 +122,6 @@ function Register() {
       // Create the user account
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-      console.log("user", user);
 
       // Set the display name (username) for the user
       await updateProfile(user, { displayName: username });

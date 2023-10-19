@@ -58,9 +58,6 @@ function StoryList({ stories, user }) {
   const navigate = useNavigate();
 
   const userStories = Array.isArray(stories) ? stories.filter((story) => story.userId === user.id) : [];
-  console.log("what stories", stories);
-  console.log('stories', userStories);
-  console.log('user', user);
 
   const handleStoryClick = (storyId) => {
     // Programmatically navigate to the story detail page

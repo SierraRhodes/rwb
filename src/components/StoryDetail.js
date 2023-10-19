@@ -300,7 +300,6 @@ function StoryDetails() {
   if (!story) {
     return <div>Loading...</div>;
   }
-  console.log(story.imageURL);
 
   const handleAddToLibraryClick = async () => {
     if (!user) {

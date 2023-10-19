@@ -122,9 +122,6 @@ const fetchUserLibrary = async () => {
           const chaptersQuery = collection(storyRef, 'chapters');
           const chaptersSnapshot = await getDocs(chaptersQuery);
           const chapters = chaptersSnapshot.docs.map((chapterDoc) => chapterDoc.data());
-          
-          console.log(chaptersQuery);
-          console.log('chapters', chaptersSnapshot);
 
           userLibraryData.push({
             id: storyId,

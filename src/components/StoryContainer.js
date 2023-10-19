@@ -75,7 +75,6 @@ const fetchStories = async () => {
     fetchUser(); // Fetch user data
     fetchStories(); // Fetch stories
   }, []);
-console.log('user', user);
   return (
     <div>
       {/* Passes the 'user' and 'stories' props to the 'StoryList' component */}

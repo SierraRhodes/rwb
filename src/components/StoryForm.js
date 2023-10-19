@@ -150,9 +150,9 @@ function StoryForm() {
             imageURL: imageUrl, // Store the imageURL in Firestore
           };
   
-          // Add the newStory to Firestore
+          // Add the new story to Firestore
           const docRef = await addDoc(collection(db, 'stories'), newStory);
-          console.log('Document written with ID: ', docRef.id);
+
           setSuccessMessage(`Story created successfully!`);
           navigate('/story-list');
         };
